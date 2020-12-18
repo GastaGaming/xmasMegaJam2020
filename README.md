@@ -20,7 +20,7 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
  ## Sprite  Spriter (Animator): 
   https://brashmonkey.com/brashmonkey/spriter/windows/Spriter_r11.zip
   
-#Windows & Visual Studio  
+#Windows \& Visual Studio  
 1. Download from Urho3D from github.  
    Create folder directly under C:, I made folder U. 
    This is done because some build methods can have issues with too long directory paths. 
