@@ -9,14 +9,17 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
 
 ##How to get started  
 * [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html)  <br/>
-<br/>
-#Other tools  
- ## Tiled version 1.0.3  
+
+ 
+ 
+#Other tools
+
+## Tiled version 1.0.3  
  [Tiled.1.0.3] (https://github.com/mapeditor/tiled/releases/tag/v1.0.3) 
  Tilet might have to be 0.9.1
  ## Sprite  Spriter (Animator): 
   https://brashmonkey.com/brashmonkey/spriter/windows/Spriter_r11.zip
-  <br/>
+  
 #Windows & Visual Studio  
 1. Download from Urho3D from github.  
    Create folder directly under C:, I made folder U. 
