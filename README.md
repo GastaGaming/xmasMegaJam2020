@@ -2,11 +2,14 @@
 Because Unity is the engine we deserve, but not the one we need right now. So we'll use Urho3D. Because Urho3D can take it. Because Urho3D is our engine.
 
 ##How to build:  
-* [Build] (https://urho3d.github.io/documentation/HEAD/_building.html)  
+* [Build] (https://urho3d.github.io/documentation/HEAD/_building.html)  <br/>
+
 ##How to use:  
-* [Use] (https://urho3d.github.io/documentation/HEAD/_using_library.html)  
+* [Use] (https://urho3d.github.io/documentation/HEAD/_using_library.html)  <br/>
+
 ##How to get started  
-* [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html)  
+* [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html)  <br/>
+
 #Other tools  
 ## Tiled version 1.0.3  
  [Tiled.1.0.3] (https://github.com/mapeditor/tiled/releases/tag/v1.0.3) 
