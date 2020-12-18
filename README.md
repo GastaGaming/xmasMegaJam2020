@@ -9,17 +9,17 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
 * [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html) 
 
 #Windows & Visual Studio
-1. Download from Urho3D from github.
+1. Download from Urho3D from github.  
    Create folder directly under C:, I made folder U. 
    This is done because some build methods can have issues with too long directory paths. 
    My build path is C:\U\Urho3D_HEAD I used git bash for downloading, but you can also download zip. 
    Git clone [https://github.com/urho3d/Urho3D.git 
    After this my Urho3D source files are located in C:\U\Urho3D_HEAD\Urho3D 
-2. Download CMAKE
+2. Download CMAKE  
     I used CMAKE version 3.15.4 GUI for building Urho3D. [https://cmake.org/download/
     After downloading and Installing create a new folder Next to Urho3D_HEAD. I named mine Urho3D_Home. 
     [![Folder Structure](./Documentation/img/Cmake_01.png?raw=true)  
-3. Build Urho Library
+3. Build Urho Library  
    Open CMAKE GUI and set your source and binary destinations 
    [![CMAKE GUI](./Documentation/img/Cmake_01.png?raw=true)
    You can also set binaries path same as source, but I like to separate so I can easily delete binaries and start again 
@@ -39,7 +39,7 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
    [![VisualStudio GUI](./Documentation/img/VisualStudio_02.png?raw=true)  
    If build was successful you can find Release builds in 
    C:\U\Urho3D_Home\bin\ and test one of those exe files. 
-4. Set your Urho3D enviroment
+4. Set your Urho3D enviroment  
 
 
    
