@@ -31,25 +31,25 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
 2. Download CMAKE  
     I used CMAKE version 3.15.4 GUI for building Urho3D. [https://cmake.org/download/]
     After downloading and Installing create a new folder Next to Urho3D_HEAD. I named mine Urho3D_Home. 
-    [!][Folder Structure](./Documentation/img/Cmake_01.png?raw=true)  
+    ![Folder Structure](./Documentation/img/Cmake_01.png?raw=true)  
 3. Build Urho Library  
    Open CMAKE GUI and set your source and binary destinations 
-   [!][CMAKE GUI](./Documentation/img/Cmake_01.png?raw=true)
+   ![CMAKE GUI](./Documentation/img/Cmake_01.png?raw=true)
    You can also set binaries path same as source, but I like to separate so I can easily delete binaries and start again 
    if there is need for it....
    After setting paths. Press configure... and select your IDE and press Finish
-   [!][CMAKE GUI](./Documentation/img/Cmake_02.png?raw=true)  
+   ![CMAKE GUI](./Documentation/img/Cmake_02.png?raw=true)  
    After that it should start configuring. In CMAKE GUI there’s stupid thing where you have to Press 
    Configure->Generate->Configure->Generate and finally after that It lets you press Open Project 
    It should look something like this...
-   [!][CMAKE GUI](./Documentation/img/Cmake_03.png?raw=true)  
+   ![CMAKE GUI](./Documentation/img/Cmake_03.png?raw=true)  
    I personally changed two settings, I enabled URHO3D_OPENGL and  URHO3D_WIN32_CONSOLE for debugging purposes 
    Open project button opens Visual Studio and in there change Debug to Release in top tool bar.
-   [!][VisualStudio GUI](./Documentation/img/VisualStudio_01.png?raw=true)
+   ![VisualStudio GUI](./Documentation/img/VisualStudio_01.png?raw=true)
    Then right Click ALL_BUILD (VISUALIZE) in solution panel and select build. 
    After that visual studio should start build process. 
    This can take a while 5 – 25 min s depending on your computer’s CPU. 
-   [!][VisualStudio GUI](./Documentation/img/VisualStudio_02.png?raw=true)  
+   ![VisualStudio GUI](./Documentation/img/VisualStudio_02.png?raw=true)  
    If build was successful you can find Release builds in 
    C:\U\Urho3D_Home\bin\ and test one of those exe files. 
 4. Set your Urho3D enviroment  
