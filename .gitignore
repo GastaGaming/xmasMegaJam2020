@@ -123,3 +123,7 @@ configure*
 *.bak
 Thumbs.db
 .directory
+
+/.clangd/
+compile_commands.json
+cmake_*.bat
