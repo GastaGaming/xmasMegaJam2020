@@ -21,6 +21,8 @@ build/
 /x64/
 /x86/
 /Debug/
+*/Release/
+*/xmasMegaJam2020.dir/
 *.sln
 
 #added
