@@ -1,30 +1,25 @@
 # xmasMegaJam2020
 Because Unity is the engine we deserve, but not the one we need right now. So we'll use Urho3D. Because Urho3D can take it. Because Urho3D is our engine.
 
-##How to build: 
+##How to build:  
 * [Build] (https://urho3d.github.io/documentation/HEAD/_building.html)
-##How to use: 
+##How to use:  
 * [Use] (https://urho3d.github.io/documentation/HEAD/_using_library.html)
-##How to get started 
+##How to get started  
 * [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html) 
 
 #Windows & Visual Studio
 1. Download from Urho3D from github.
-   ```sh
    Create folder directly under C:, I made folder U. 
    This is done because some build methods can have issues with too long directory paths. 
    My build path is C:\U\Urho3D_HEAD I used git bash for downloading, but you can also download zip. 
    Git clone [https://github.com/urho3d/Urho3D.git 
    After this my Urho3D source files are located in C:\U\Urho3D_HEAD\Urho3D 
-   ```
 2. Download CMAKE
-   ```sh
     I used CMAKE version 3.15.4 GUI for building Urho3D. [https://cmake.org/download/
     After downloading and Installing create a new folder Next to Urho3D_HEAD. I named mine Urho3D_Home. 
     [![Folder Structure](https://github.com/GastaGaming/xmasMegaJam2020/Documentation/img/Cmake_01.png)
-   ```
 3. Build Urho Library
-   ```sh
    Open CMAKE GUI and set your source and binary destinations 
    [![CMAKE GUI](https://github.com/GastaGaming/xmasMegaJam2020/Documentation/img/Cmake_01.png)
    You can also set binaries path same as source, but I like to separate so I can easily delete binaries and start again 
@@ -44,7 +39,6 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
    [![VisualStudio GUI](https://github.com/GastaGaming/xmasMegaJam2020/Documentation/img/VisualStudio_02.png)
    If build was successful you can find Release builds in 
    C:\U\Urho3D_Home\bin\ and test one of those exe files. 
-   ```
 4. Set your Urho3D enviroment
 
 
