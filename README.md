@@ -7,8 +7,14 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
 * [Use] (https://urho3d.github.io/documentation/HEAD/_using_library.html)
 ##How to get started  
 * [Main Loop] (https://urho3d.github.io/documentation/HEAD/_main_loop.html) 
+#Other tools  
+## Tiled version 1.0.3  
+ [Tiled.1.0.3] (https://github.com/mapeditor/tiled/releases/tag/v1.0.3) 
+ Tilet might have to be 0.9.1
+ ## Sprite  Spriter (Animator): 
+  https://brashmonkey.com/brashmonkey/spriter/windows/Spriter_r11.zip
 
-#Windows & Visual Studio
+#Windows & Visual Studio  
 1. Download from Urho3D from github.  
    Create folder directly under C:, I made folder U. 
    This is done because some build methods can have issues with too long directory paths. 
@@ -40,11 +46,12 @@ Because Unity is the engine we deserve, but not the one we need right now. So we
    If build was successful you can find Release builds in 
    C:\U\Urho3D_Home\bin\ and test one of those exe files. 
 4. Set your Urho3D enviroment  
+   Go to System Properties -> Environment Variables.  
+   Add new User bariable give variable name "URHO3D_HOME" and set path to C:/u/Urho3D_Home
+5. Build this project
+   After all that you are ready to build this project
+   Go to this project folder and open cmake.
+   Set source to project root and build binaries same. 
 
-
-   
-   
-   
-   
    ```
  
