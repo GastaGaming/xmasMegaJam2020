@@ -2,6 +2,7 @@
 #include <sstream>
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
+#include "enemy.h"
 
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
@@ -56,6 +57,8 @@ public:
         engineParameters_[EP_WINDOW_HEIGHT]=720;
         GetSubsystem<Engine>()->SetMaxFps(999999);
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
+
+        Enemy::RegisterObject(context_);
     }
 
     /**
