@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0">
+        <file id="0" name="GreenThing_body.png" width="373" height="327" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="1" name="GreenThing_Bow.png" width="241" height="114" pivot_x="0.5" pivot_y="0"/>
+        <file id="2" name="GreenThing_Right.png" width="129" height="176" pivot_x="0.689922" pivot_y="0.738636"/>
+    </folder>
+    <entity id="0" name="GreenThing">
+        <animation id="0" name="Idle" length="2000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="3" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="0" z_index="3"/>
+                </key>
+                <key id="1" time="599">
+                    <object_ref id="0" timeline="3" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="2" time="700">
+                    <object_ref id="0" timeline="3" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="3" time="702">
+                    <object_ref id="0" timeline="3" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="4" time="1000">
+                    <object_ref id="0" timeline="3" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="5" time="2000">
+                    <object_ref id="0" timeline="3" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="2" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="2" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="2" z_index="3"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="GreenThing_body">
+                <key id="0">
+                    <object folder="0" file="0" x="14.266234" y="57.175325"/>
+                </key>
+                <key id="1" time="700" spin="-1">
+                    <object folder="0" file="0" x="14.266234" y="74.936519" angle="6.113665" scale_x="1"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="0" x="14.266234" y="57.175325"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="GreenThing_Bow">
+                <key id="0">
+                    <object folder="0" file="1" x="46.75722" y="160.472572"/>
+                </key>
+                <key id="1" time="599" spin="-1">
+                    <object folder="0" file="1" x="32.483331" y="182.133605" angle="11.044521" scale_y="1"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="1" x="46.75722" y="160.472572"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="GreenThing_Right">
+                <key id="0" spin="-1">
+                    <object folder="0" file="2" x="-43.428571" y="-36.519545"/>
+                </key>
+                <key id="1" time="599">
+                    <object folder="0" file="2" x="-43.428571" y="-36.519545" angle="355.711307" scale_x="1"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="2" x="-43.428571" y="-36.519545"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="GreenThing_Left">
+                <key id="0">
+                    <object folder="0" file="2" x="35.675325" y="-19.026038" angle="0" scale_x="-1"/>
+                </key>
+                <key id="1" time="599" spin="-1">
+                    <object folder="0" file="2" x="35.675325" y="-19.026038" angle="7.806185" scale_x="-1" scale_y="1"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="2" x="35.675325" y="-19.026038" angle="0" scale_x="-1"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="Walk" length="2000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="3" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="0" z_index="3"/>
+                </key>
+                <key id="1" time="498">
+                    <object_ref id="0" timeline="3" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="0" z_index="3"/>
+                </key>
+                <key id="2" time="1000">
+                    <object_ref id="0" timeline="3" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="2" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="3" time="1500">
+                    <object_ref id="0" timeline="3" key="3" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="3" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="1" z_index="3"/>
+                </key>
+                <key id="4" time="2000">
+                    <object_ref id="0" timeline="3" key="4" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="4" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="2" z_index="2"/>
+                    <object_ref id="3" timeline="1" key="2" z_index="3"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="GreenThing_body">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="14.266234" y="57.175325"/>
+                </key>
+                <key id="1" time="1000" spin="0">
+                    <object folder="0" file="0" x="14.266234" y="87.841991"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="0" x="14.266234" y="57.175325"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="GreenThing_Bow">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="46.75722" y="160.472572"/>
+                </key>
+                <key id="1" time="1000" spin="0">
+                    <object folder="0" file="1" x="34.75722" y="197.805906"/>
+                </key>
+                <key id="2" time="2000" spin="0">
+                    <object folder="0" file="1" x="46.75722" y="160.472572"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="GreenThing_Right">
+                <key id="0" spin="0">
+                    <object folder="0" file="2" x="-43.428571" y="-36.519545"/>
+                </key>
+                <key id="1" time="498" spin="0">
+                    <object folder="0" file="2" x="-22.679238" y="-31.919545"/>
+                </key>
+                <key id="2" time="1000" spin="0">
+                    <object folder="0" file="2" x="-84.761905" y="-3.186211"/>
+                </key>
+                <key id="3" time="1500" spin="0">
+                    <object folder="0" file="2" x="-52.095238" y="4.147122"/>
+                </key>
+                <key id="4" time="2000" spin="0">
+                    <object folder="0" file="2" x="-43.428571" y="-36.519545"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="GreenThing_Left">
+                <key id="0" spin="0">
+                    <object folder="0" file="2" x="35.675325" y="-19.026038" angle="0" scale_x="-1"/>
+                </key>
+                <key id="1" time="498" spin="0">
+                    <object folder="0" file="2" x="82.336658" y="-55.764705" angle="0" scale_x="-1"/>
+                </key>
+                <key id="2" time="1000" spin="0">
+                    <object folder="0" file="2" x="38.341991" y="16.973962" angle="0" scale_x="-1"/>
+                </key>
+                <key id="3" time="1500" spin="0">
+                    <object folder="0" file="2" x="54.341991" y="-39.692705" angle="0" scale_x="-1"/>
+                </key>
+                <key id="4" time="2000" spin="0">
+                    <object folder="0" file="2" x="35.675325" y="-19.026038" angle="0" scale_x="-1"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

@@ -66,14 +66,27 @@ public:
     */
     virtual void Start()
     {
+
+        
         // We will be needing to load resources.
         // All the resources used in this example comes with Urho3D.
         // If the engine can't find them, check the ResourcePrefixPath (see http://urho3d.github.io/documentation/1.7/_main_loop.html).
         ResourceCache* cache=GetSubsystem<ResourceCache>();
 
+        // Let's setup a scene to render.
+        scene_ = new Scene(context_);
+        // Let the scene have an Octree component!
+        scene_->CreateComponent<Octree>();
+        // Let's add an additional scene component for fun.
+        scene_->CreateComponent<DebugRenderer>();
+
+        // We need a camera from which the viewport can render.
+        cameraNode_ = scene_->CreateChild("Camera");
+        Camera* camera = cameraNode_->CreateComponent<Camera>();
+        camera->SetFarClip(2000);
         // Now we setup the viewport. Of course, you can have more than one!
         Renderer* renderer=GetSubsystem<Renderer>();
-        SharedPtr<Viewport> viewport(new Viewport(context_,scene_,cameraNode_->GetComponent<Camera>()));
+        SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
         renderer->SetViewport(0,viewport);
 
         // We subscribe to the events we'd like to handle.
