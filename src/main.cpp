@@ -2,7 +2,7 @@
 #include <sstream>
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
-#include "Player.h"
+#include "enemy.h"
 
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
@@ -59,7 +59,7 @@ public:
         GetSubsystem<Engine>()->SetMaxFps(999999);
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
         Player::RegisterObject(context_);
-
+        Enemy::RegisterObject(context_);
     }
 
     /**
