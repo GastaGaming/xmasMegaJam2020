@@ -11,8 +11,10 @@ public:
 	SharedPtr<Node> player_;
 	float startFloat = 0;
 
-	Input* input = nullptr;
-	Node* camera = nullptr;
+	Input* input_ = nullptr;
+	Camera* camera_ = nullptr;
+
+	bool Test = true;
 
 	// Construct
 	explicit Player(Context* context);
@@ -21,10 +23,10 @@ public:
 	/// Perform post-load after deserialization. Acquire the components from the scene nodes.
 	void ApplyAttributes() override;
 	/// Handle physics world update. Called by LogicComponent base class.
-	//void FixedUpdate(float timeStep) override;
 	void Update(float timeStep) override;
-	/// Initialize the vehicle. Create rendering and physics components. Called by the application.
-	virtual void Init(Scene* scene);
+	void PostUpdate(float timeStep) override;
+	/// Init player. Make references to systems etc. Called by the application.
+	virtual void Init(Scene* scene, Camera* sceneCamera);
 
 private:
 

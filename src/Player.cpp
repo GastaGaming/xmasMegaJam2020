@@ -22,28 +22,47 @@ void Player::Update(float timeStep)
 {
 	/*if (input->GetKeyDown(KEY_SHIFT))
 		MOVE_SPEED *= 10;*/
-	if (input->GetKeyDown(KEY_I))
-		node_->Translate(Vector3(0, 0, 1) * timeStep);
-	if (input->GetKeyDown(KEY_K))
-		node_->Translate(Vector3(0, 0, -1) * timeStep);
-	if (input->GetKeyDown(KEY_J))
-		node_->Translate(Vector3(-1, 0, 0) * timeStep);
-	if (input->GetKeyDown(KEY_L))
-		node_->Translate(Vector3(1, 0, 0) * timeStep);
+	if (input_->GetKeyDown(KEY_I))
+		node_->Translate(Vector3(0, 10, 0) * timeStep);
+	if (input_->GetKeyDown(KEY_K))
+		node_->Translate(Vector3(0, -10, 0) * timeStep);
+	if (input_->GetKeyDown(KEY_J))
+		node_->Translate(Vector3(-10, 0, 0) * timeStep);
+	if (input_->GetKeyDown(KEY_L))
+		node_->Translate(Vector3(10, 0, 0) * timeStep);
 }
 
-void Player::Init(Scene* scene)
+void Player::PostUpdate(float timeStep)
+{
+	//Follow player with camera
+	if (Test)
+	{
+		camera_->GetNode()->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_, -30.0f));
+		Test = false;
+	}
+
+}
+
+void Player::Init(Scene* scene, Camera* sceneCamera)
 {
 	// This function is called only from the main program when initially creating the vehicle, not on scene load
 	auto* cache = GetSubsystem<ResourceCache>();
 	Scene* scene_ = scene;
 
-	input = scene_->GetSubsystem<Input>();
+	input_ = scene_->GetSubsystem<Input>();
+	camera_ = sceneCamera;
 
-	StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
+	//Get start position
+	//Get art
+	SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
+	node_->AddChild(spriteNode);
+	StaticSprite2D* staticSprite = spriteNode->CreateComponent<StaticSprite2D>();
+	staticSprite->SetSprite(cache->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
+
+	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
 	playerBoxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
 	playerBoxObject->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
-	playerBoxObject->SetCastShadows(true);
+	playerBoxObject->SetCastShadows(true);*/
 	/*auto* hullObject = player_->CreateComponent<StaticModel>();
 	auto* hullShape = player_->CreateComponent<CollisionShape>();
 
@@ -52,8 +71,5 @@ void Player::Init(Scene* scene)
 	hullObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
 	hullObject->SetCastShadows(true);
 	hullShape->SetBox(Vector3::ONE);*/
-	camera = node_->CreateChild("Camera");
-	Camera* cameraComponent = camera->CreateComponent<Camera>();
-	cameraComponent->SetFarClip(2000);
 	/*cameraComponent->SetOrthographic(true);*/
 }
