@@ -3,6 +3,10 @@
 !/bin/**/
 !/bin/*.bat
 !/bin/*.sh
+
+!/bin/CoreData/
+!/bin/Date/
+
 /bin/*.app/
 /bin/*.app.dSYM/
 /bin/jit/
@@ -15,16 +19,11 @@ generated/
 build/
 /captures/
 .cxx/
-/UrheeMaggara.dir/
-/MyExecutableName.dir/
+/xmasMegaJam2020.dir/
 /Win32/
-/x64/
-/x86/
 /Debug/
-*/Release/
-*/Release/*.
-*/xmasMegaJam2020.dir/
-*.sln
+/x64/
+/Release/
 
 #added
 .vs/
@@ -126,7 +125,3 @@ configure*
 *.bak
 Thumbs.db
 .directory
-
-/.clangd/
-compile_commands.json
-cmake_*.bat
