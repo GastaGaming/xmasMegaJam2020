@@ -2,7 +2,7 @@
 #include <sstream>
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
-
+#include "Player.h"
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>
@@ -23,6 +23,8 @@ public:
     SharedPtr<Scene> scene_;
     SharedPtr<Node> boxNode_;
     SharedPtr<Node> cameraNode_;
+
+    SharedPtr<Node> playerNode_;
 
     /**
     * This happens before the engine has been initialized
@@ -57,6 +59,7 @@ public:
         engineParameters_[EP_WINDOW_HEIGHT]=720;
         GetSubsystem<Engine>()->SetMaxFps(999999);
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
+        Player::RegisterObject(context_);
     }
 
     /**
@@ -114,15 +117,22 @@ public:
         skybox->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
         skybox->SetMaterial(cache->GetResource<Material>("Materials/Skybox.xml"));
 
+        //Lets try fit player somewhere
+        playerNode_ = scene_->CreateChild("Player");
+        playerNode_->SetPosition(Vector3(1, 1, 1));
+        playerNode_->SetScale(Vector3(1.5, 1.5, 1.5));
+        Player* playerLokik = playerNode_->CreateComponent<Player>();
+        playerLokik->Init(scene_);
+
         // Let's put a box in there.
         boxNode_=scene_->CreateChild("Box");
         boxNode_->SetPosition(Vector3(0,2,15));
         boxNode_->SetScale(Vector3(3,3,3));
-        StaticModel* boxObject=boxNode_->CreateComponent<StaticModel>();
+        StaticModel* boxObject = boxNode_->CreateComponent<StaticModel>();
         boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
         boxObject->SetCastShadows(true);
-
+        
         // Create 400 boxes in a grid.
         for(int x=-30;x<30;x+=3)
             for(int z=0;z<60;z+=3)
@@ -305,6 +315,16 @@ public:
         if(input->GetKeyDown(KEY_D))
             cameraNode_->Translate(Vector3( 1,0,0)*MOVE_SPEED*timeStep);
 
+        /*input = GetSubsystem<Input>();
+        if (input->GetKeyDown(KEY_I))
+            playerNode_->Translate(Vector3(0, 0, 1));
+        if (input->GetKeyDown(KEY_K))
+            playerNode_->Translate(Vector3(0, 0, -1));
+        if (input->GetKeyDown(KEY_J))
+            playerNode_->Translate(Vector3(-1, 0, 0));
+        if (input->GetKeyDown(KEY_L))
+            playerNode_->Translate(Vector3(1, 0, 0));*/
+
         if(!GetSubsystem<Input>()->IsMouseVisible())
         {
             // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
@@ -319,6 +339,7 @@ public:
             cameraNode_->Yaw(yaw_);
             cameraNode_->Pitch(pitch_);
         }
+        playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
