@@ -170,7 +170,6 @@ public:
         framecount_++;
         time_+=timeStep;
         
-        //playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
@@ -182,7 +181,6 @@ public:
         framecount_++;
         time_ += timeStep;
 
-        //playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
     }
     /**
     * If you have any details you want to change before the viewport is
