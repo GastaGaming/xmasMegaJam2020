@@ -11,13 +11,14 @@ using namespace Urho3D;
 class TileMapLoader
 {
 public: 
+    TileMapLoader() = default;
     TileMapLoader(ResourceCache* cache);
 
     SharedPtr<Node> CreateNodeFromTileMap(
-            Scene* scene, 
-            const char* path
-            TileMapInfo2D& info);
+            Scene* pScene, 
+            const char* path,
+            TileMapInfo2D* pInfo);
 
 private:
-    ResourceCache* m_pCache = nullptr;
+    ResourceCache* m_pCache;
 };

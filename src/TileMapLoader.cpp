@@ -8,7 +8,7 @@ TileMapLoader::TileMapLoader(ResourceCache* pCache)
 SharedPtr<Node> TileMapLoader::CreateNodeFromTileMap(
         Scene* pScene, 
         const char* path,
-        TileMapInfo2D* info)
+        TileMapInfo2D* pInfo)
 {
     TmxFile2D* pTMXFile = m_pCache->GetResource<TmxFile2D>(path);
     SharedPtr<Node> tileMapNode(pScene->CreateChild("TileMap"));
@@ -16,10 +16,10 @@ SharedPtr<Node> TileMapLoader::CreateNodeFromTileMap(
     tileMap->SetTmxFile(pTMXFile);
 
 
-    if(info != nullptr)
+    if(pInfo != nullptr)
     {
         TileMapInfo2D mapInfo = tileMap->GetInfo();
-        info = &mapInfo;
+        pInfo = &mapInfo;
     }
 
     return tileMapNode;

@@ -3,7 +3,7 @@
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
-
+#include "TileMapLoader.h"
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>
@@ -23,6 +23,8 @@ public:
     SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
+    
+    TileMapLoader m_tileMapLoader;
 
     /**
     * This happens before the engine has been initialized
@@ -91,6 +93,14 @@ public:
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
         renderer->SetViewport(0,viewport);
+
+        TileMapInfo2D info;
+        m_tileMapLoader = *new TileMapLoader(cache);
+        SharedPtr<Node> tileMapNode = m_tileMapLoader.CreateNodeFromTileMap(scene_, "xmash2D/Level/Level01.tmx", &info);
+        TileMap2D* map = tileMapNode->GetComponent<TileMap2D>();
+
+        String* asd = new String(map->GetTypeName()); 
+        URHO3D_LOGINFO(*asd);
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
