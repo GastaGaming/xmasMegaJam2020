@@ -30,13 +30,16 @@ public:
     SharedPtr<Node> playerNode_;
     SharedPtr<Node> enemyNode_;
 
+    Input* input_;
+    bool drawPhysicsDebug_;
+
     /**
     * This happens before the engine has been initialized
     * so it's usually minimal code setting defaults for
     * whatever instance variables you have.
     * You can also do this in the Setup method.
     */
-    MyApp(Context * context) : Application(context),framecount_(0),time_(0)
+    MyApp(Context * context) : Application(context),framecount_(0),time_(0), drawPhysicsDebug_(false)
     {
     }
 
@@ -87,6 +90,8 @@ public:
         scene_ = new Scene(context_);
         // Let the scene have an Octree component!
         scene_->CreateComponent<Octree>();
+        scene_->CreateComponent<PhysicsWorld>();
+        scene_->CreateComponent<PhysicsWorld2D>();
         // Let's add an additional scene component for fun.
         scene_->CreateComponent<DebugRenderer>();
 
@@ -167,6 +172,11 @@ public:
         {
             GetSubsystem<Input>()->SetMouseVisible(!GetSubsystem<Input>()->IsMouseVisible());
         }
+
+        if (key == KEY_9)
+        {
+            drawPhysicsDebug_ = !drawPhysicsDebug_;
+        }
     }
 
     /**
@@ -186,7 +196,6 @@ public:
         framecount_++;
         time_+=timeStep;
         
-        //playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
@@ -198,7 +207,6 @@ public:
         framecount_++;
         time_ += timeStep;
 
-        //playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
     }
     /**
     * If you have any details you want to change before the viewport is
@@ -221,6 +229,10 @@ public:
     {
         // We could draw some debuggy looking thing for the octree.
         // scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
+        if (drawPhysicsDebug_)
+        {
+            scene_->GetComponent<PhysicsWorld2D>()->DrawDebugGeometry(scene_->GetComponent<DebugRenderer>(), drawPhysicsDebug_);
+        }
     }
     /**
     * All good things must come to an end.
