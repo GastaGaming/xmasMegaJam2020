@@ -25,6 +25,7 @@ public:
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
     SharedPtr<Node> playerNode_;
+    SharedPtr<Node> enemyNode_;
 
     /**
     * This happens before the engine has been initialized
@@ -100,6 +101,10 @@ public:
         Player* playerComp = playerNode_->CreateComponent<Player>();
         playerComp->Init(scene_, camera);
 
+        //Create test enemy
+        enemyNode_ = scene_->CreateChild("TestEnemy");
+        Enemy* enemyComp = enemyNode_->CreateComponent<Enemy>();
+        enemyComp->Init();
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
