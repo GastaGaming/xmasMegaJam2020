@@ -21,6 +21,7 @@ class MyApp : public Application
 public:
     int framecount_;
     float time_;
+    bool drawPhysicsDebug_;
     SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
@@ -32,7 +33,7 @@ public:
     * whatever instance variables you have.
     * You can also do this in the Setup method.
     */
-    MyApp(Context * context) : Application(context),framecount_(0),time_(0)
+    MyApp(Context * context) : Application(context),framecount_(0),time_(0),drawPhysicsDebug_(false)
     {
     }
 
@@ -151,6 +152,11 @@ public:
         {
             GetSubsystem<Input>()->SetMouseVisible(!GetSubsystem<Input>()->IsMouseVisible());
         }
+
+        if (key == KEY_9)
+        {
+            drawPhysicsDebug_ = !drawPhysicsDebug_;
+        }
     }
 
     /**
@@ -205,6 +211,10 @@ public:
     {
         // We could draw some debuggy looking thing for the octree.
         // scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
+        if (drawPhysicsDebug_)
+        {
+            scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+        }
     }
     /**
     * All good things must come to an end.
