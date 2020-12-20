@@ -113,7 +113,7 @@ void Player::PostUpdate(StringHash eventType, VariantMap& eventData)
 	if (Test)
 	{
 		camera_->GetNode()->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_, -30.0f));
-		Test = false;
+		//Test = false;
 	}
 
 }

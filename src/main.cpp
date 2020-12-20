@@ -3,6 +3,7 @@
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
+#include "TileMapLoader.h"
 #include "Player.h"
 #include "Snowball.h"
 
@@ -24,6 +25,8 @@ public:
     SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
+    
+    TileMapLoader m_tileMapLoader;
     SharedPtr<Node> playerNode_;
     SharedPtr<Node> enemyNode_;
 
@@ -95,6 +98,14 @@ public:
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
         renderer->SetViewport(0,viewport);
+
+        TileMapInfo2D info;
+        m_tileMapLoader = *new TileMapLoader(cache);
+        SharedPtr<Node> tileMapNode = m_tileMapLoader.CreateNodeFromTileMap(scene_, "xmash2D/Level/Level01.tmx", &info);
+        TileMap2D* map = tileMapNode->GetComponent<TileMap2D>();
+
+        String* asd = new String(map->GetTypeName()); 
+        URHO3D_LOGINFO(*asd);
 
         //Setup player and pass camera to it, cause renderer wanted it first
         playerNode_ = scene_->CreateChild("Player");
