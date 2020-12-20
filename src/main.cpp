@@ -4,6 +4,7 @@
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
 #include "Player.h"
+#include "Snowball.h"
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>
@@ -60,6 +61,7 @@ public:
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
         Player::RegisterObject(context_);
         Enemy::RegisterObject(context_);
+        Snowball::RegisterObject(context_);
     }
 
     /**
@@ -168,7 +170,7 @@ public:
         framecount_++;
         time_+=timeStep;
         
-        playerNode_->GetComponent<Player>()->Update(timeStep);
+        //playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
@@ -180,7 +182,7 @@ public:
         framecount_++;
         time_ += timeStep;
 
-        playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
+        //playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
     }
     /**
     * If you have any details you want to change before the viewport is

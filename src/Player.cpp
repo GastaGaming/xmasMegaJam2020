@@ -39,7 +39,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	// Set size
 	playerHitBox->SetSize(node_->GetScale2D());
 
-	launchPoint_.x_ = node_->GetScale2D().x_;
+	launchDir_.x_ = node_->GetScale2D().x_;
 	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
 	playerBoxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
 	playerBoxObject->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
@@ -53,35 +53,60 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	hullObject->SetCastShadows(true);
 	hullShape->SetBox(Vector3::ONE);*/
 	/*cameraComponent->SetOrthographic(true);*/
+	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
 }
 
 //Handle physics update
-void Player::Update(float timeStep)
+void Player::Update(StringHash eventType, VariantMap& eventData)
 {
-	moveDir_ = Vector3::ZERO;
+	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+	framecount_++;
+	time_ += timeStep;
+
+	moveDir_ = Vector2::ZERO;
 	float movementSpeed = 5.0f;
 	/*if (input->GetKeyDown(KEY_SHIFT))
 		MOVE_SPEED *= 10;*/
-	if (input_->GetKeyDown(KEY_I))
-		moveDir_ += Vector3::UP;
-	if (input_->GetKeyDown(KEY_K))
-		moveDir_ += Vector3::DOWN;
-	if (input_->GetKeyDown(KEY_J))
-		moveDir_ += Vector3::LEFT;
-	if (input_->GetKeyDown(KEY_L))
-		moveDir_ += Vector3::RIGHT;
+	if (input_->GetKeyDown(KEY_W))
+		moveDir_ += Vector2::UP;
+	if (input_->GetKeyDown(KEY_S))
+		moveDir_ += Vector2::DOWN;
+	if (input_->GetKeyDown(KEY_A))
+		moveDir_ += Vector2::LEFT;
+	if (input_->GetKeyDown(KEY_D))
+		moveDir_ += Vector2::RIGHT;
 
-	if (!moveDir_.Equals(Vector3::ZERO))
+	if (!moveDir_.Equals(Vector2::ZERO))
 	{
 		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
-		launchPoint_ = node_->GetPosition() + moveDir_;
+		launchDir_ = moveDir_;
 	}
 
 	if (input_->GetKeyDown(KEY_SPACE))
-		Snowball();
+	{
+		if (!firing_)
+		{
+			firing_ = true;
+			ThrowProjectile();
+		}
+	}
+
+	if (tmr.GetMSec(false) > RoF_)
+	{
+		firing_ = false;
+		tmr.Reset();
+	}
+
+	/*if (projectileUpdates.Size()>0)
+	{
+		for (size_t i = 0; i < projectileUpdates.Size(); i++)
+		{
+			
+		}
+	}*/
 }
 
-void Player::PostUpdate(float timeStep)
+void Player::PostUpdate(StringHash eventType, VariantMap& eventData)
 {
 	//Follow player with camera
 	if (Test)
@@ -92,15 +117,26 @@ void Player::PostUpdate(float timeStep)
 
 }
 
-void Player::Snowball()
+void Player::ThrowProjectile()
 {
+	//Pitää säätää kokoa collisionia varte jossain kohtaa
 	Node* snowBall = scene_->CreateChild("Snowball");
-	snowBall->SetPosition(launchPoint_*5.f);//Magic number spawn distance
+	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*5.f);//Magic number spawn distance
+	Snowball* snowBallComp = snowBall->CreateComponent<Snowball>();
+	snowBallComp->Init(scene_, launchDir_);
 
-	auto* body = snowBall->CreateComponent<RigidBody2D>();
-	body->SetBodyType(BT_DYNAMIC);
+	//projectileUpdates.Push()
+	////auto* rigidBody = snowBall->CreateComponent<RigidBody2D>();
+	//rigidBody->SetBodyType(BT_DYNAMIC);
+	//rigidBody->SetGravityScale(0.f);
 
-	auto* staticSprite = snowBall->CreateComponent<StaticSprite2D>();
-	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+	//auto* staticSprite = snowBall->CreateComponent<StaticSprite2D>();
+	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+
+	//auto* collBox = snowBall->CreateComponent<CollisionBox2D>();
+	//collBox->SetSize(node_->GetScale2D()); //Pitäisi sovittaa noden kokoiseksi
+
+	//rigidBody->ApplyLinearImpulse(launchDir_.Normalized() * launchSpeed, Vector2::ZERO, true);
+
 }
 
