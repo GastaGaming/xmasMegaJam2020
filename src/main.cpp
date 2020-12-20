@@ -30,7 +30,6 @@ public:
     SharedPtr<Node> playerNode_;
     SharedPtr<Node> enemyNode_;
 
-    Input* input_;
     bool drawPhysicsDebug_;
 
     /**
