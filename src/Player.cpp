@@ -27,11 +27,8 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	camera_ = sceneCamera;
 
 	//Get start position
+	
 	//Get art
-	//SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
-	//node_->AddChild(spriteNode);
-	//spriteNode->SetScale2D(Vector2(1, 1));
-
 	StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
 	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
 
@@ -42,25 +39,24 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	//playerHitBox->SetSize(Vector2::ONE);
 	playerHitBox->SetSize(staticSprite->GetSprite()->GetTexture()->GetWidth()*0.01f, staticSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
 
 	launchDir_.x_ = node_->GetScale2D().x_;
-	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
-	playerBoxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-	playerBoxObject->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
-	playerBoxObject->SetCastShadows(true);*/
-	/*auto* hullObject = player_->CreateComponent<StaticModel>();
-	auto* hullShape = player_->CreateComponent<CollisionShape>();
 
-	player_->SetScale(Vector3(3, 3, 3));
-	hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-	hullObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
-	hullObject->SetCastShadows(true);
-	hullShape->SetBox(Vector3::ONE);*/
-	/*cameraComponent->SetOrthographic(true);*/
+	//KOLINATESTI
+	Node* loota = scene_->CreateChild("LOOTA");
+	RigidBody2D* body2 = loota->CreateComponent<RigidBody2D>();
+	body2->SetBodyType(BT_STATIC);
+	body2->SetGravityScale(0.f);
+	CollisionBox2D* box2 = loota->CreateComponent<CollisionBox2D>();
+	box2->SetSize(Vector2::ONE);
+
+	//LOPPU
+
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
 	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Player, PostUpdate));
+	SubscribeToEvent(E_NODECOLLISIONSTART, URHO3D_HANDLER(Player, NodeCollision));
+
 }
 
 //Handle physics update
@@ -101,14 +97,6 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 		firing_ = false;
 		tmr.Reset();
 	}
-
-	/*if (projectileUpdates.Size()>0)
-	{
-		for (size_t i = 0; i < projectileUpdates.Size(); i++)
-		{
-			
-		}
-	}*/
 }
 
 void Player::PostUpdate(StringHash eventType, VariantMap& eventData)
@@ -130,18 +118,18 @@ void Player::ThrowProjectile()
 	Snowball* snowBallComp = snowBall->CreateComponent<Snowball>();
 	snowBallComp->Init(scene_, launchDir_);
 
-	//projectileUpdates.Push()
-	////auto* rigidBody = snowBall->CreateComponent<RigidBody2D>();
-	//rigidBody->SetBodyType(BT_DYNAMIC);
-	//rigidBody->SetGravityScale(0.f);
+}
 
-	//auto* staticSprite = snowBall->CreateComponent<StaticSprite2D>();
-	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+void Player::NodeCollision(StringHash eventType, VariantMap& eventData)
+{
+	URHO3D_LOGINFO("APUA");
+	Node* otherNode = static_cast<Node*>(eventData["OtherNode"].GetPtr());
+	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData["OtherBody"].GetPtr());
+	VectorBuffer contacts = eventData["Contacts"].GetBuffer();
+	if (otherNode)
+	{
 
-	//auto* collBox = snowBall->CreateComponent<CollisionBox2D>();
-	//collBox->SetSize(node_->GetScale2D()); //Pitäisi sovittaa noden kokoiseksi
-
-	//rigidBody->ApplyLinearImpulse(launchDir_.Normalized() * launchSpeed, Vector2::ZERO, true);
+	}
 
 }
 

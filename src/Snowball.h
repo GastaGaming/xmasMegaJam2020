@@ -18,6 +18,8 @@ public:
 	//void PostUpdate(float timeStep) override;
 	/// Init player. Make references to systems etc. Called by the application.
 	virtual void Init(Scene* scene_, Vector2 launchDir_);
+
+	void NodeCollision(StringHash eventType, VariantMap& eventData);
 private:
 	void TimesUp();
 
