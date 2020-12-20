@@ -7,10 +7,6 @@ class Snowball : public LogicComponent
 	URHO3D_OBJECT(Snowball, LogicComponent)
 
 public:
-	int framecount_;
-	float time_;
-
-public:
 	// Construct
 	explicit Snowball(Context* context);
 	/// Register object factory and attributes.

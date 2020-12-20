@@ -26,7 +26,7 @@ void Snowball::Init(Scene* scene_, Vector2 launchDir_)
 	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
 
 	SharedPtr<CollisionBox2D> collBox(node_->CreateComponent<CollisionBox2D>());
-	collBox->SetSize(node_->GetScale2D()); //Pitäisi sovittaa noden kokoiseksi
+	collBox->SetSize(staticSprite->GetSprite()->GetTexture()->GetWidth() * 0.01f, staticSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
 	
 
 	rigidBody->ApplyLinearImpulse(launchDir_.Normalized() * launchSpeed, Vector2::ZERO, true);
@@ -41,8 +41,6 @@ void Snowball::Init(Scene* scene_, Vector2 launchDir_)
 void Snowball::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
-	framecount_++;
-	time_ += timeStep;
 
 	if (stillAlive)
 	{

@@ -27,13 +27,16 @@ public:
     SharedPtr<Node> playerNode_;
     SharedPtr<Node> enemyNode_;
 
+    Input* input_;
+    bool drawPhysicsDebug_;
+
     /**
     * This happens before the engine has been initialized
     * so it's usually minimal code setting defaults for
     * whatever instance variables you have.
     * You can also do this in the Setup method.
     */
-    MyApp(Context * context) : Application(context),framecount_(0),time_(0)
+    MyApp(Context * context) : Application(context),framecount_(0),time_(0), drawPhysicsDebug_(false)
     {
     }
 
@@ -84,6 +87,8 @@ public:
         scene_ = new Scene(context_);
         // Let the scene have an Octree component!
         scene_->CreateComponent<Octree>();
+        scene_->CreateComponent<PhysicsWorld>();
+        scene_->CreateComponent<PhysicsWorld2D>();
         // Let's add an additional scene component for fun.
         scene_->CreateComponent<DebugRenderer>();
 
@@ -95,6 +100,8 @@ public:
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
         renderer->SetViewport(0,viewport);
+
+        input_ = scene_->GetSubsystem<Input>();
 
         //Setup player and pass camera to it, cause renderer wanted it first
         playerNode_ = scene_->CreateChild("Player");
@@ -156,6 +163,11 @@ public:
         {
             GetSubsystem<Input>()->SetMouseVisible(!GetSubsystem<Input>()->IsMouseVisible());
         }
+
+        if (key == KEY_9)
+        {
+            drawPhysicsDebug_ = !drawPhysicsDebug_;
+        }
     }
 
     /**
@@ -208,6 +220,10 @@ public:
     {
         // We could draw some debuggy looking thing for the octree.
         // scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
+        if (drawPhysicsDebug_)
+        {
+            scene_->GetComponent<PhysicsWorld2D>()->DrawDebugGeometry(scene_->GetComponent<DebugRenderer>(), drawPhysicsDebug_);
+        }
     }
     /**
     * All good things must come to an end.
