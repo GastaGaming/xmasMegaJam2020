@@ -130,3 +130,4 @@ Thumbs.db
 /.clangd/
 compile_commands.json
 cmake_*.bat
+/.cache/
