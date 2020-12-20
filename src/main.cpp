@@ -3,7 +3,7 @@
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
-
+#include "Player.h"
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>

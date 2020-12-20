@@ -17,48 +17,29 @@ void Player::ApplyAttributes()
 	Scene* scene = GetScene();
 }
 
-//Handle physics update
-void Player::Update(float timeStep)
-{
-	/*if (input->GetKeyDown(KEY_SHIFT))
-		MOVE_SPEED *= 10;*/
-	if (input_->GetKeyDown(KEY_I))
-		node_->Translate(Vector3(0, 10, 0) * timeStep);
-	if (input_->GetKeyDown(KEY_K))
-		node_->Translate(Vector3(0, -10, 0) * timeStep);
-	if (input_->GetKeyDown(KEY_J))
-		node_->Translate(Vector3(-10, 0, 0) * timeStep);
-	if (input_->GetKeyDown(KEY_L))
-		node_->Translate(Vector3(10, 0, 0) * timeStep);
-}
-
-void Player::PostUpdate(float timeStep)
-{
-	//Follow player with camera
-	if (Test)
-	{
-		camera_->GetNode()->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_, -30.0f));
-		Test = false;
-	}
-
-}
-
 void Player::Init(Scene* scene, Camera* sceneCamera)
 {
 	// This function is called only from the main program when initially creating the vehicle, not on scene load
-	auto* cache = GetSubsystem<ResourceCache>();
-	Scene* scene_ = scene;
+	cache_ = GetSubsystem<ResourceCache>();
+	scene_ = scene;
 
 	input_ = scene_->GetSubsystem<Input>();
 	camera_ = sceneCamera;
 
 	//Get start position
 	//Get art
-	SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
-	node_->AddChild(spriteNode);
-	StaticSprite2D* staticSprite = spriteNode->CreateComponent<StaticSprite2D>();
-	staticSprite->SetSprite(cache->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
+	//SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
+	//node_->AddChild(spriteNode);
+	//spriteNode->SetScale2D(Vector2(1, 1));
 
+	StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
+	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
+
+	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
+	// Set size
+	playerHitBox->SetSize(node_->GetScale2D());
+
+	launchPoint_.x_ = node_->GetScale2D().x_;
 	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
 	playerBoxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
 	playerBoxObject->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
@@ -73,3 +54,53 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	hullShape->SetBox(Vector3::ONE);*/
 	/*cameraComponent->SetOrthographic(true);*/
 }
+
+//Handle physics update
+void Player::Update(float timeStep)
+{
+	moveDir_ = Vector3::ZERO;
+	float movementSpeed = 5.0f;
+	/*if (input->GetKeyDown(KEY_SHIFT))
+		MOVE_SPEED *= 10;*/
+	if (input_->GetKeyDown(KEY_I))
+		moveDir_ += Vector3::UP;
+	if (input_->GetKeyDown(KEY_K))
+		moveDir_ += Vector3::DOWN;
+	if (input_->GetKeyDown(KEY_J))
+		moveDir_ += Vector3::LEFT;
+	if (input_->GetKeyDown(KEY_L))
+		moveDir_ += Vector3::RIGHT;
+
+	if (!moveDir_.Equals(Vector3::ZERO))
+	{
+		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
+		launchPoint_ = node_->GetPosition() + moveDir_;
+	}
+
+	if (input_->GetKeyDown(KEY_SPACE))
+		Snowball();
+}
+
+void Player::PostUpdate(float timeStep)
+{
+	//Follow player with camera
+	if (Test)
+	{
+		camera_->GetNode()->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_, -30.0f));
+		Test = false;
+	}
+
+}
+
+void Player::Snowball()
+{
+	Node* snowBall = scene_->CreateChild("Snowball");
+	snowBall->SetPosition(launchPoint_*5.f);//Magic number spawn distance
+
+	auto* body = snowBall->CreateComponent<RigidBody2D>();
+	body->SetBodyType(BT_DYNAMIC);
+
+	auto* staticSprite = snowBall->CreateComponent<StaticSprite2D>();
+	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+}
+
