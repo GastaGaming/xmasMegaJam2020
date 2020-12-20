@@ -4,6 +4,8 @@
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
 #include "TileMapLoader.h"
+#include "Player.h"
+#include "Snowball.h"
 
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>
@@ -25,6 +27,7 @@ public:
     SharedPtr<Node> cameraNode_;
     
     TileMapLoader m_tileMapLoader;
+    SharedPtr<Node> playerNode_;
 
     /**
     * This happens before the engine has been initialized
@@ -59,8 +62,9 @@ public:
         engineParameters_[EP_WINDOW_HEIGHT]=720;
         GetSubsystem<Engine>()->SetMaxFps(999999);
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
-
+        Player::RegisterObject(context_);
         Enemy::RegisterObject(context_);
+        Snowball::RegisterObject(context_);
     }
 
     /**
@@ -101,6 +105,12 @@ public:
 
         String* asd = new String(map->GetTypeName()); 
         URHO3D_LOGINFO(*asd);
+
+        //Setup player and pass camera to it, cause renderer wanted it first
+        playerNode_ = scene_->CreateChild("Player");
+        Player* playerComp = playerNode_->CreateComponent<Player>();
+        playerComp->Init(scene_, camera);
+
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
@@ -171,6 +181,7 @@ public:
         framecount_++;
         time_+=timeStep;
         
+        //playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
@@ -178,8 +189,11 @@ public:
     */
     void HandlePostUpdate(StringHash eventType,VariantMap& eventData)
     {
-        // We really don't have anything useful to do here for this example.
-        // Probably shouldn't be subscribing to events we don't care about.
+        float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
+        framecount_++;
+        time_ += timeStep;
+
+        //playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
     }
     /**
     * If you have any details you want to change before the viewport is
