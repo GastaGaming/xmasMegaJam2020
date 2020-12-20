@@ -14,8 +14,6 @@ public:
 	
 	void Init();
 
-	void Start() override;
-
 	void Update(StringHash eventType, VariantMap& eventData);
 
 	static void RegisterObject(Context* context);

@@ -34,16 +34,12 @@ void Enemy::Init()
 	node_->SetPosition2D(Vector2::ZERO);
 }
 
-void Enemy::Start()
-{
-	
-}
-
 void Enemy::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 
 	//node_->SetPosition2D(node_->GetPosition2D() + Vector2((5.0f * timeStep), 0.0f));
+	//node_->Rotate2D(10.0f * timeStep);
 }
 
 void Enemy::RegisterObject(Context* context)
