@@ -54,6 +54,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	hullShape->SetBox(Vector3::ONE);*/
 	/*cameraComponent->SetOrthographic(true);*/
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
+	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Player, PostUpdate));
 }
 
 //Handle physics update
