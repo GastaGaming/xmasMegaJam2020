@@ -33,7 +33,7 @@ public:
 	virtual void Init(Scene* scene, Camera* sceneCamera);
 
 	void ThrowProjectile();
-	void NodeCollision(StringHash eventType, VariantMap& eventData);
+	void NodeCollision2(StringHash eventType, VariantMap& eventData);
 
 private:
 	Timer tmr = Timer();

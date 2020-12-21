@@ -52,7 +52,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f/3, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
+	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f/3, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f*0.75); //Magic numbers to adjust hitbox
 	//animeSpriteTonttu->GetSprite()->GetSpriteSheet()->GetTexture()->
 	launchDir_.x_ = node_->GetScale2D().x_;
 
@@ -70,7 +70,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
 	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Player, PostUpdate));
-	SubscribeToEvent(E_NODECOLLISIONSTART, URHO3D_HANDLER(Player, NodeCollision));
+	SubscribeToEvent(E_PHYSICSBEGINCONTACT2D, URHO3D_HANDLER(Player, NodeCollision2));
 
 }
 
@@ -113,7 +113,7 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 		}
 	}
 
-	if (input_->GetKeyDown(KEY_F))
+	if (input_->GetKeyDown(KEY_SHIFT))
 	{
 		if (!MasterDisquised)
 		{
@@ -160,15 +160,15 @@ void Player::ThrowProjectile()
 {
 	//Pitää säätää kokoa collisionia varte jossain kohtaa
 	Node* snowBall = scene_->CreateChild("Snowball");
-	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*2.f);//Magic number spawn distance
+	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*3.f);//Magic number spawn distance
 	Snowball* snowBallComp = snowBall->CreateComponent<Snowball>();
 	snowBallComp->Init(scene_, launchDir_);
 
 }
 
-void Player::NodeCollision(StringHash eventType, VariantMap& eventData)
+void Player::NodeCollision2(StringHash eventType, VariantMap& eventData)
 {
-	URHO3D_LOGINFO("APUA");
+	//URHO3D_LOGINFO("APUA");
 	Node* otherNode = static_cast<Node*>(eventData["OtherNode"].GetPtr());
 	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData["OtherBody"].GetPtr());
 	VectorBuffer contacts = eventData["Contacts"].GetBuffer();

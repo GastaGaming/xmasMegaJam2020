@@ -119,7 +119,7 @@ public:
         playerComp->Init(scene_, camera);
 
         //Create test enemy
-        enemyNode_ = scene_->CreateChild("TestEnemy");
+        enemyNode_ = scene_->CreateChild("Petteri");
         Enemy* enemyComp = enemyNode_->CreateComponent<Enemy>();
         enemyComp->Init();
 
