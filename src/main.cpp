@@ -110,6 +110,10 @@ public:
         SharedPtr<Node> tileMapNode = m_tileMapLoader.CreateNodeFromTileMap(scene_, "xmash2D/Level/Level01.tmx", &info);
         TileMap2D* map = tileMapNode->GetComponent<TileMap2D>();
 
+        const TileMapInfo2D& infos = map->GetInfo();
+        TileMapLayer2D* tileMapLayer = map->GetLayer(map->GetNumLayers() - 3);
+        m_tileMapLoader.CreateCollisionShapesFromTMXObjects(tileMapNode, tileMapLayer, infos);
+
         String* asd = new String(map->GetTypeName()); 
         URHO3D_LOGINFO(*asd);
 
