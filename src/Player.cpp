@@ -38,7 +38,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	AnimatedSprite2D* animatedSprite = node_->CreateComponent<AnimatedSprite2D>();
 	auto* animationSet = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
 	animatedSprite->SetAnimationSet(animationSet);
-	animatedSprite->SetAnimation("Idle§");
+	animatedSprite->SetAnimation("Idle");
 	animatedSprite->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
