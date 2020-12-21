@@ -97,7 +97,9 @@ public:
         // We need a camera from which the viewport can render.
         cameraNode_ = scene_->CreateChild("Camera");
         Camera* camera = cameraNode_->CreateComponent<Camera>();
-        camera->SetFarClip(2000);
+        //camera->SetFarClip(2000);
+        camera->SetOrthographic(20);
+        camera->SetOrthographic(true);
         // Now we setup the viewport. Of course, you can have more than one!
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));

@@ -29,35 +29,35 @@
             </mainline>
             <timeline id="0" name="Gnome_Body">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-1" y="-13"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="0"/>
                 </key>
                 <key id="1" time="500" spin="0">
-                    <object folder="0" file="0" x="2" y="-20"/>
+                    <object folder="0" file="0" x="2" y="-20" angle="0"/>
                 </key>
                 <key id="2" time="1000" spin="0">
-                    <object folder="0" file="0" x="-1" y="-13"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="0"/>
                 </key>
             </timeline>
             <timeline id="1" name="Gnome_Head">
                 <key id="0" spin="0">
-                    <object folder="0" file="1" x="7" y="3"/>
+                    <object folder="0" file="1" x="7" y="3" angle="0"/>
                 </key>
                 <key id="1" time="500" spin="0">
-                    <object folder="0" file="1" x="8" y="-6"/>
+                    <object folder="0" file="1" x="8" y="-6" angle="0"/>
                 </key>
                 <key id="2" time="1000" spin="0">
-                    <object folder="0" file="1" x="7" y="3"/>
+                    <object folder="0" file="1" x="7" y="3" angle="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="Gnome_Leg_Right">
                 <key id="0" spin="-1">
-                    <object folder="0" file="2" x="-18" y="-44"/>
+                    <object folder="0" file="2" x="-18" y="-44" angle="0"/>
                 </key>
                 <key id="1" time="500">
                     <object folder="0" file="2" x="-18" y="-44" angle="356.87787"/>
                 </key>
                 <key id="2" time="1000" spin="0">
-                    <object folder="0" file="2" x="-18" y="-44"/>
+                    <object folder="0" file="2" x="-18" y="-44" angle="0"/>
                 </key>
             </timeline>
             <timeline id="3" name="Gnome_Leg_Left">
@@ -65,7 +65,7 @@
                     <object folder="0" file="2" x="34" y="-46" angle="0" scale_x="-1"/>
                 </key>
                 <key id="1" time="500" spin="-1">
-                    <object folder="0" file="2" x="34" y="-46" angle="5.194429" scale_x="-1" scale_y="1"/>
+                    <object folder="0" file="2" x="34" y="-46" angle="5.194429" scale_x="-1"/>
                 </key>
                 <key id="2" time="1000" spin="0">
                     <object folder="0" file="2" x="34" y="-46" angle="0" scale_x="-1"/>
@@ -107,47 +107,47 @@
             </mainline>
             <timeline id="0" name="Gnome_Body">
                 <key id="0" spin="-1">
-                    <object folder="0" file="0" x="-1" y="-13" angle="4.519332" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="4.519332"/>
                 </key>
                 <key id="1" time="300" spin="-1">
-                    <object folder="0" file="0" x="-1" y="-13" angle="358.013007" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="358.013007"/>
                 </key>
                 <key id="2" time="500">
-                    <object folder="0" file="0" x="-1" y="-13" angle="354.691643" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="354.691643"/>
                 </key>
                 <key id="3" time="750" spin="-1">
-                    <object folder="0" file="0" x="-1" y="-13" angle="7.409965" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="7.409965"/>
                 </key>
                 <key id="4" time="1000" spin="0">
-                    <object folder="0" file="0" x="-1" y="-13" angle="4.519332" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="0" x="-1" y="-13" angle="4.519332"/>
                 </key>
             </timeline>
             <timeline id="1" name="Gnome_Head">
                 <key id="0">
-                    <object folder="0" file="1" x="7" y="3" angle="354.968066" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="1" x="7" y="3" angle="354.968066"/>
                 </key>
                 <key id="1" time="300">
-                    <object folder="0" file="1" x="7" y="3" angle="359.666481" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="1" x="7" y="3" angle="359.666481"/>
                 </key>
                 <key id="2" time="500" spin="-1">
-                    <object folder="0" file="1" x="7" y="3" angle="6.83144" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="1" x="7" y="3" angle="6.83144"/>
                 </key>
                 <key id="3" time="1000" spin="0">
-                    <object folder="0" file="1" x="7" y="3" angle="354.968066" scale_x="1" scale_y="1"/>
+                    <object folder="0" file="1" x="7" y="3" angle="354.968066"/>
                 </key>
             </timeline>
             <timeline id="2" name="Gnome_Leg_Right">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="-18" y="-44"/>
+                    <object folder="0" file="2" x="-18" y="-44" angle="0"/>
                 </key>
                 <key id="1" time="500" spin="0">
-                    <object folder="0" file="2" x="-14.73913" y="-37.478261"/>
+                    <object folder="0" file="2" x="-14.73913" y="-37.478261" angle="0"/>
                 </key>
                 <key id="2" time="750" spin="0">
-                    <object folder="0" file="2" x="-18.543478" y="-58.130435"/>
+                    <object folder="0" file="2" x="-18.543478" y="-58.130435" angle="0"/>
                 </key>
                 <key id="3" time="1000" spin="0">
-                    <object folder="0" file="2" x="-18" y="-44"/>
+                    <object folder="0" file="2" x="-18" y="-44" angle="0"/>
                 </key>
             </timeline>
             <timeline id="3" name="Gnome_Leg_Left">

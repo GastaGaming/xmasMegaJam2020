@@ -24,6 +24,7 @@ void Snowball::Init(Scene* scene_, Vector2 launchDir_)
 
 	SharedPtr<StaticSprite2D> staticSprite(node_->CreateComponent<StaticSprite2D>());
 	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+	staticSprite->SetLayer(10);
 
 	SharedPtr<CollisionBox2D> collBox(node_->CreateComponent<CollisionBox2D>());
 	collBox->SetSize(staticSprite->GetSprite()->GetTexture()->GetWidth() * 0.01f, staticSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);

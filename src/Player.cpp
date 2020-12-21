@@ -32,8 +32,14 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	//node_->AddChild(spriteNode);
 	//spriteNode->SetScale2D(Vector2(1, 1));
 
-	StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
-	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
+	//StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
+	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
+
+	AnimatedSprite2D* animatedSprite = node_->CreateComponent<AnimatedSprite2D>();
+	auto* animationSet = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
+	animatedSprite->SetAnimationSet(animationSet);
+	animatedSprite->SetAnimation("Idle§");
+	animatedSprite->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
 	rigidBody->SetBodyType(BT_DYNAMIC);
@@ -43,7 +49,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
 	//playerHitBox->SetSize(Vector2::ONE);
-	playerHitBox->SetSize(staticSprite->GetSprite()->GetTexture()->GetWidth()*0.01f, staticSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
+	playerHitBox->SetSize(animatedSprite->GetSprite()->GetTexture()->GetWidth()*0.01f, animatedSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
 
 	launchDir_.x_ = node_->GetScale2D().x_;
 	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
@@ -67,7 +73,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 void Player::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
-
+	AnimatedSprite2D* animatedSprite = node_->GetComponent<AnimatedSprite2D>();
 	moveDir_ = Vector2::ZERO;
 	float movementSpeed = 5.0f;
 	/*if (input->GetKeyDown(KEY_SHIFT))
@@ -85,6 +91,13 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 	{
 		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
 		launchDir_ = moveDir_;
+		if(animatedSprite->GetAnimation() != "Walk")
+			animatedSprite->SetAnimation("Walk");
+	}
+	else
+	{
+		if (animatedSprite->GetAnimation() != "Idle")
+			animatedSprite->SetAnimation("Idle");
 	}
 
 	if (input_->GetKeyDown(KEY_SPACE))
