@@ -35,9 +35,15 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
 	staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
 
+	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
+	rigidBody->SetBodyType(BT_DYNAMIC);
+	rigidBody->SetGravityScale(0.f);
+
+
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	playerHitBox->SetSize(node_->GetScale2D());
+	//playerHitBox->SetSize(Vector2::ONE);
+	playerHitBox->SetSize(staticSprite->GetSprite()->GetTexture()->GetWidth()*0.01f, staticSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
 
 	launchDir_.x_ = node_->GetScale2D().x_;
 	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
@@ -61,8 +67,6 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 void Player::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
-	framecount_++;
-	time_ += timeStep;
 
 	moveDir_ = Vector2::ZERO;
 	float movementSpeed = 5.0f;
@@ -113,7 +117,7 @@ void Player::PostUpdate(StringHash eventType, VariantMap& eventData)
 	if (Test)
 	{
 		camera_->GetNode()->SetPosition(Vector3(node_->GetPosition().x_, node_->GetPosition().y_, -30.0f));
-		Test = false;
+		//Test = false;
 	}
 
 }

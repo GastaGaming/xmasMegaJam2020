@@ -9,8 +9,6 @@ class Player : public LogicComponent
 	URHO3D_OBJECT(Player, LogicComponent)
 
 public:
-	int framecount_;
-	float time_;
 	SharedPtr<Node> player_;
 	float startFloat = 0;
 

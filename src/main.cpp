@@ -3,6 +3,7 @@
 //Just lazy fucker include whole urho
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
+#include "TileMapLoader.h"
 #include "Player.h"
 #include "Snowball.h"
 
@@ -21,11 +22,15 @@ class MyApp : public Application
 public:
     int framecount_;
     float time_;
-    bool drawPhysicsDebug_;
     SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
+    
+    TileMapLoader m_tileMapLoader;
     SharedPtr<Node> playerNode_;
+    SharedPtr<Node> enemyNode_;
+
+    bool drawPhysicsDebug_;
 
     /**
     * This happens before the engine has been initialized
@@ -33,7 +38,7 @@ public:
     * whatever instance variables you have.
     * You can also do this in the Setup method.
     */
-    MyApp(Context * context) : Application(context),framecount_(0),time_(0),drawPhysicsDebug_(false)
+    MyApp(Context * context) : Application(context),framecount_(0),time_(0), drawPhysicsDebug_(false)
     {
     }
 
@@ -84,6 +89,8 @@ public:
         scene_ = new Scene(context_);
         // Let the scene have an Octree component!
         scene_->CreateComponent<Octree>();
+        scene_->CreateComponent<PhysicsWorld>();
+        scene_->CreateComponent<PhysicsWorld2D>();
         // Let's add an additional scene component for fun.
         scene_->CreateComponent<DebugRenderer>();
 
@@ -96,11 +103,23 @@ public:
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
         renderer->SetViewport(0,viewport);
 
+        TileMapInfo2D info;
+        m_tileMapLoader = *new TileMapLoader(cache);
+        SharedPtr<Node> tileMapNode = m_tileMapLoader.CreateNodeFromTileMap(scene_, "xmash2D/Level/Level01.tmx", &info);
+        TileMap2D* map = tileMapNode->GetComponent<TileMap2D>();
+
+        String* asd = new String(map->GetTypeName()); 
+        URHO3D_LOGINFO(*asd);
+
         //Setup player and pass camera to it, cause renderer wanted it first
         playerNode_ = scene_->CreateChild("Player");
         Player* playerComp = playerNode_->CreateComponent<Player>();
         playerComp->Init(scene_, camera);
 
+        //Create test enemy
+        enemyNode_ = scene_->CreateChild("TestEnemy");
+        Enemy* enemyComp = enemyNode_->CreateComponent<Enemy>();
+        enemyComp->Init();
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
@@ -176,7 +195,6 @@ public:
         framecount_++;
         time_+=timeStep;
         
-        //playerNode_->GetComponent<Player>()->Update(timeStep);
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
@@ -188,7 +206,6 @@ public:
         framecount_++;
         time_ += timeStep;
 
-        //playerNode_->GetComponent<Player>()->PostUpdate(timeStep);
     }
     /**
     * If you have any details you want to change before the viewport is
@@ -213,7 +230,7 @@ public:
         // scene_->GetComponent<Octree>()->DrawDebugGeometry(true);
         if (drawPhysicsDebug_)
         {
-            scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+            scene_->GetComponent<PhysicsWorld2D>()->DrawDebugGeometry(scene_->GetComponent<DebugRenderer>(), drawPhysicsDebug_);
         }
     }
     /**

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
     <folder id="0">
-        <file id="0" name="Petteri_Body.png" width="222" height="277" pivot_x="0" pivot_y="1"/>
+        <file id="0" name="Petteri_Body.png" width="222" height="277" pivot_x="0.5" pivot_y="0.5"/>
         <file id="1" name="Petteri_Head.png" width="451" height="282" pivot_x="0.5" pivot_y="0.230496"/>
         <file id="2" name="Petteri_Tail.png" width="90" height="105" pivot_x="0.5" pivot_y="0.828571"/>
     </folder>
@@ -31,7 +31,7 @@
             </mainline>
             <timeline id="0" name="Petteri_Body">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-109" y="127"/>
+                    <object folder="0" file="0" x="2" y="-11.5"/>
                 </key>
             </timeline>
             <timeline id="1" name="Petteri_Head">
@@ -54,6 +54,58 @@
                 </key>
                 <key id="2" time="800" spin="-1">
                     <object folder="0" file="2" x="-1" y="-104" angle="6.87228" scale_y="1"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="Walk" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="0" z_index="2"/>
+                </key>
+                <key id="1" time="400">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="1" z_index="2"/>
+                </key>
+                <key id="2" time="800">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="2" z_index="2"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="Petteri_Body">
+                <key id="0">
+                    <object folder="0" file="0" x="2" y="-11.5"/>
+                </key>
+                <key id="1" time="400" spin="-1">
+                    <object folder="0" file="0" x="2" y="-11.5" angle="17.282503" scale_x="1"/>
+                </key>
+                <key id="2" time="800">
+                    <object folder="0" file="0" x="2" y="-11.5" angle="336.556933"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="Petteri_Head">
+                <key id="0">
+                    <object folder="0" file="1" x="-1" y="90"/>
+                </key>
+                <key id="1" time="400" spin="-1">
+                    <object folder="0" file="1" x="-23.307692" y="65.384615" angle="5.099913"/>
+                </key>
+                <key id="2" time="800">
+                    <object folder="0" file="1" x="29.769231" y="73.846154" angle="357.449599" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="Petteri_Tail">
+                <key id="0" spin="-1">
+                    <object folder="0" file="2" x="-1" y="-104"/>
+                </key>
+                <key id="1" time="400">
+                    <object folder="0" file="2" x="36.692308" y="-99.384615" angle="353.373954" scale_x="1"/>
+                </key>
+                <key id="2" time="800" spin="-1">
+                    <object folder="0" file="2" x="-51" y="-97.846154" angle="6.87228" scale_y="1"/>
                 </key>
             </timeline>
         </animation>

@@ -10,9 +10,11 @@ public:
 
 	void ApplyAttributes() override;
 
-	void Start() override;
+	void SubscribeToEvents();
+	
+	void Init();
 
-	void Update(float timeStep) override;
+	void Update(StringHash eventType, VariantMap& eventData);
 
 	static void RegisterObject(Context* context);
 
