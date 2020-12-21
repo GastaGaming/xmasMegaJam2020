@@ -41,6 +41,12 @@ private:
 	Vector2 moveDir_ = Vector2(0,0);
 	Vector2 launchDir_ = Vector2(0,0);
 
+
+	AnimationSet2D* animeSetTonttu;
+	AnimationSet2D* animeSeteGreenThing;
+	SharedPtr<AnimatedSprite2D> animeSpriteTonttu;
+	SharedPtr<AnimatedSprite2D> animeSpriteGreenThing;
+
 	bool firing_ = false;
 	float RoF_ = 500;//Milliseconds
 	float launchSpeed = 10.f;
