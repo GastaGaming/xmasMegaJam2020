@@ -32,11 +32,22 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	//StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
 	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
 
-	AnimatedSprite2D* animatedSprite = node_->CreateComponent<AnimatedSprite2D>();
-	auto* animationSet = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
-	animatedSprite->SetAnimationSet(animationSet);
-	animatedSprite->SetAnimation("Idle");
-	animatedSprite->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
+	animeSetTonttu = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
+	animeSeteGreenThing = cache_->GetResource<AnimationSet2D>("xmash2D/GreenThing/GreenThing.scml");
+
+
+	animeSpriteTonttu = node_->CreateComponent<AnimatedSprite2D>();
+	animeSpriteTonttu->SetAnimationSet(animeSetTonttu);
+	animeSpriteTonttu->SetAnimation("Idle");
+	animeSpriteTonttu->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
+	animeSpriteTonttu->SetEnabled(true);
+
+	animeSpriteGreenThing = node_->CreateComponent<AnimatedSprite2D>();
+	animeSpriteGreenThing->SetAnimationSet(animeSeteGreenThing);
+	animeSpriteGreenThing->SetAnimation("Idle");
+	animeSpriteGreenThing->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
+	animeSpriteGreenThing->SetEnabled(false);
+
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
 	rigidBody->SetBodyType(BT_DYNAMIC);
@@ -45,7 +56,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	playerHitBox->SetSize(animatedSprite->GetSprite()->GetTexture()->GetWidth()*0.01f, animatedSprite->GetSprite()->GetTexture()->GetHeight() * 0.01f);
+	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
 
 	launchDir_.x_ = node_->GetScale2D().x_;
 
@@ -69,7 +80,6 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 void Player::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
-	AnimatedSprite2D* animatedSprite = node_->GetComponent<AnimatedSprite2D>();
 	moveDir_ = Vector2::ZERO;
 	float movementSpeed = 5.0f;
 	/*if (input->GetKeyDown(KEY_SHIFT))
@@ -82,6 +92,12 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 		moveDir_ += Vector2::LEFT;
 	if (input_->GetKeyDown(KEY_D))
 		moveDir_ += Vector2::RIGHT;
+
+	AnimatedSprite2D* animatedSprite = node_->GetComponent<AnimatedSprite2D>();
+	if (node_->GetComponent<AnimatedSprite2D>()->IsEnabled() == true && animatedSprite != animeSpriteTonttu)
+	{
+		animatedSprite = animeSpriteGreenThing;
+	}
 
 	if (!moveDir_.Equals(Vector2::ZERO))
 	{
@@ -102,6 +118,20 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 		{
 			firing_ = true;
 			ThrowProjectile();
+		}
+	}
+
+	if (input_->GetKeyDown(KEY_F))
+	{
+		if (animatedSprite == animeSpriteTonttu)
+		{
+			animeSpriteTonttu->SetEnabled(false);
+			animeSpriteGreenThing->SetEnabled(true);
+		}
+		else
+		{
+			animeSpriteTonttu->SetEnabled(true);
+			animeSpriteGreenThing->SetEnabled(false);
 		}
 	}
 
