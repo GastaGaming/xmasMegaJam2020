@@ -28,6 +28,7 @@ build/
 #added
 .vs/
 *.vcxproj*
+*.sln
 
 # Output files
 /Source/**/*.a
