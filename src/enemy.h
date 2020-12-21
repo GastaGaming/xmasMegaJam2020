@@ -19,7 +19,19 @@ public:
 	static void RegisterObject(Context* context);
 
 private:
+	bool moveTowardsNext(float timeStep);
+	void nextWaypoint();
+	
+	StaticSprite2D* spriteComponent;
 	float timeToDetect;
 	bool playerSeen;
 	float detectionTimer;
+	float patrolSpeed;
+	Vector<Vector2>* waypoints;
+
+	int oldWaypointIndex;
+	int currentWaypointIndex;
+	float waypointTravelledDistance;
+	float distanceToNextWaypoint;
+	Vector2 directionToNextWaypoint;
 };
