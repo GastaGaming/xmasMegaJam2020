@@ -47,7 +47,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	animatedSprite = animeSpriteTonttu;
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
-	rigidBody->SetBodyType(BT_DYNAMIC);
+	rigidBody->SetBodyType(BT_KINEMATIC);
 	rigidBody->SetGravityScale(0.f);
 
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
@@ -59,7 +59,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	//KOLINATESTI
 	Node* loota = scene_->CreateChild("LOOTA");
 	RigidBody2D* body2 = loota->CreateComponent<RigidBody2D>();
-	body2->SetBodyType(BT_STATIC);
+	body2->SetBodyType(BT_KINEMATIC);
 	body2->SetGravityScale(0.f);
 	CollisionBox2D* box2 = loota->CreateComponent<CollisionBox2D>();
 	box2->SetSize(Vector2::ONE);
