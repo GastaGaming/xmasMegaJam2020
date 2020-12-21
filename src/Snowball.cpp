@@ -37,6 +37,7 @@ void Snowball::Init(Scene* scene_, Vector2 launchDir_)
 
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Snowball, Update));
 	//SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Snowball, PostUpdate));
+	SubscribeToEvent(E_NODECOLLISIONSTART, URHO3D_HANDLER(Snowball, NodeCollision));
 }
 
 void Snowball::Update(StringHash eventType, VariantMap& eventData)
@@ -50,6 +51,19 @@ void Snowball::Update(StringHash eventType, VariantMap& eventData)
 			TimesUp();
 		}
 	}
+}
+
+void Snowball::NodeCollision(StringHash eventType, VariantMap& eventData)
+{
+	
+	Node* otherNode = static_cast<Node*>(eventData["OtherNode"].GetPtr());
+	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData["OtherBody"].GetPtr());
+	VectorBuffer contacts = eventData["Contacts"].GetBuffer();
+	if (otherNode)
+	{
+
+	}
+
 }
 
 //void Snowball::PostUpdate(float timeStep)

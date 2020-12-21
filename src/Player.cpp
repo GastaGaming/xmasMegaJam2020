@@ -27,17 +27,10 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	camera_ = sceneCamera;
 
 	//Get start position
+	
 	//Get art
-	//SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
-	//node_->AddChild(spriteNode);
-	//spriteNode->SetScale2D(Vector2(1, 1));
-
-	//StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
-	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
-
 	animeSetTonttu = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
 	animeSeteGreenThing = cache_->GetResource<AnimationSet2D>("xmash2D/GreenThing/GreenThing.scml");
-
 
 	animeSpriteTonttu = node_->CreateComponent<AnimatedSprite2D>();
 	animeSpriteTonttu->SetAnimationSet(animeSetTonttu);
@@ -51,33 +44,34 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	animeSpriteGreenThing->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
 	animeSpriteGreenThing->SetEnabled(false);
 
+	animatedSprite = animeSpriteTonttu;
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
 	rigidBody->SetBodyType(BT_DYNAMIC);
 	rigidBody->SetGravityScale(0.f);
 
-
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	//playerHitBox->SetSize(Vector2::ONE);
-	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
-
+	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f/3, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
+	//animeSpriteTonttu->GetSprite()->GetSpriteSheet()->GetTexture()->
 	launchDir_.x_ = node_->GetScale2D().x_;
-	/*StaticModel* playerBoxObject = node_->CreateComponent<StaticModel>();
-	playerBoxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-	playerBoxObject->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
-	playerBoxObject->SetCastShadows(true);*/
-	/*auto* hullObject = player_->CreateComponent<StaticModel>();
-	auto* hullShape = player_->CreateComponent<CollisionShape>();
 
-	player_->SetScale(Vector3(3, 3, 3));
-	hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-	hullObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
-	hullObject->SetCastShadows(true);
-	hullShape->SetBox(Vector3::ONE);*/
-	/*cameraComponent->SetOrthographic(true);*/
+	//KOLINATESTI
+	Node* loota = scene_->CreateChild("LOOTA");
+	RigidBody2D* body2 = loota->CreateComponent<RigidBody2D>();
+	body2->SetBodyType(BT_STATIC);
+	body2->SetGravityScale(0.f);
+	CollisionBox2D* box2 = loota->CreateComponent<CollisionBox2D>();
+	box2->SetSize(Vector2::ONE);
+
+	//LOPPU
+
+	MasterDisquised = false;
+
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
 	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Player, PostUpdate));
+	SubscribeToEvent(E_NODECOLLISIONSTART, URHO3D_HANDLER(Player, NodeCollision));
+
 }
 
 //Handle physics update
@@ -97,22 +91,16 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 	if (input_->GetKeyDown(KEY_D))
 		moveDir_ += Vector2::RIGHT;
 
-	AnimatedSprite2D* animatedSprite = node_->GetComponent<AnimatedSprite2D>();
-	if (node_->GetComponent<AnimatedSprite2D>()->IsEnabled() == true && animatedSprite != animeSpriteTonttu)
-	{
-		animatedSprite = animeSpriteGreenThing;
-	}
-
 	if (!moveDir_.Equals(Vector2::ZERO))
 	{
 		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
 		launchDir_ = moveDir_;
-		if(animatedSprite->GetAnimation() != "Walk")
+		/*if(animatedSprite->GetAnimation() != "Walk")*/
 			animatedSprite->SetAnimation("Walk");
 	}
 	else
 	{
-		if (animatedSprite->GetAnimation() != "Idle")
+		/*if (animatedSprite->GetAnimation() != "Idle")*/
 			animatedSprite->SetAnimation("Idle");
 	}
 
@@ -127,31 +115,34 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 
 	if (input_->GetKeyDown(KEY_F))
 	{
-		if (animatedSprite == animeSpriteTonttu)
+		if (!MasterDisquised)
 		{
-			animeSpriteTonttu->SetEnabled(false);
-			animeSpriteGreenThing->SetEnabled(true);
-		}
-		else
-		{
-			animeSpriteTonttu->SetEnabled(true);
-			animeSpriteGreenThing->SetEnabled(false);
+			if (animatedSprite == animeSpriteTonttu)
+			{
+				animeSpriteTonttu->SetEnabled(false);
+				animeSpriteGreenThing->SetEnabled(true);
+				animatedSprite = animeSpriteGreenThing;
+			}
+			else
+			{
+				animeSpriteTonttu->SetEnabled(true);
+				animeSpriteGreenThing->SetEnabled(false);
+				animatedSprite = animeSpriteTonttu;
+			}
+			MasterDisquised = true;
 		}
 	}
+	else
+	{
+		MasterDisquised = false;
+	}
+
 
 	if (tmr.GetMSec(false) > RoF_)
 	{
 		firing_ = false;
 		tmr.Reset();
 	}
-
-	/*if (projectileUpdates.Size()>0)
-	{
-		for (size_t i = 0; i < projectileUpdates.Size(); i++)
-		{
-			
-		}
-	}*/
 }
 
 void Player::PostUpdate(StringHash eventType, VariantMap& eventData)
@@ -169,22 +160,22 @@ void Player::ThrowProjectile()
 {
 	//Pitää säätää kokoa collisionia varte jossain kohtaa
 	Node* snowBall = scene_->CreateChild("Snowball");
-	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*5.f);//Magic number spawn distance
+	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*2.f);//Magic number spawn distance
 	Snowball* snowBallComp = snowBall->CreateComponent<Snowball>();
 	snowBallComp->Init(scene_, launchDir_);
 
-	//projectileUpdates.Push()
-	////auto* rigidBody = snowBall->CreateComponent<RigidBody2D>();
-	//rigidBody->SetBodyType(BT_DYNAMIC);
-	//rigidBody->SetGravityScale(0.f);
+}
 
-	//auto* staticSprite = snowBall->CreateComponent<StaticSprite2D>();
-	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/SnowBoll.png"));
+void Player::NodeCollision(StringHash eventType, VariantMap& eventData)
+{
+	URHO3D_LOGINFO("APUA");
+	Node* otherNode = static_cast<Node*>(eventData["OtherNode"].GetPtr());
+	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData["OtherBody"].GetPtr());
+	VectorBuffer contacts = eventData["Contacts"].GetBuffer();
+	if (otherNode)
+	{
 
-	//auto* collBox = snowBall->CreateComponent<CollisionBox2D>();
-	//collBox->SetSize(node_->GetScale2D()); //Pitäisi sovittaa noden kokoiseksi
-
-	//rigidBody->ApplyLinearImpulse(launchDir_.Normalized() * launchSpeed, Vector2::ZERO, true);
+	}
 
 }
 
