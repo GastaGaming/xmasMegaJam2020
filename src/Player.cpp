@@ -29,12 +29,8 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	//Get start position
 	
 	//Get art
-	//StaticSprite2D* staticSprite = node_->CreateComponent<StaticSprite2D>();
-	//staticSprite->SetSprite(cache_->GetResource<Sprite2D>("xmash2D/GreenThing.png"));
-
 	animeSetTonttu = cache_->GetResource<AnimationSet2D>("xmash2D/Gnome/Gnome.scml");
 	animeSeteGreenThing = cache_->GetResource<AnimationSet2D>("xmash2D/GreenThing/GreenThing.scml");
-
 
 	animeSpriteTonttu = node_->CreateComponent<AnimatedSprite2D>();
 	animeSpriteTonttu->SetAnimationSet(animeSetTonttu);
@@ -48,16 +44,16 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	animeSpriteGreenThing->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
 	animeSpriteGreenThing->SetEnabled(false);
 
+	animatedSprite = animeSpriteTonttu;
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
 	rigidBody->SetBodyType(BT_DYNAMIC);
 	rigidBody->SetGravityScale(0.f);
 
-
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
 	// Set size
-	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
-
+	playerHitBox->SetSize(animeSpriteTonttu->GetSprite()->GetTexture()->GetWidth()*0.01f/3, animeSpriteTonttu->GetSprite()->GetTexture()->GetHeight() * 0.01f);
+	//animeSpriteTonttu->GetSprite()->GetSpriteSheet()->GetTexture()->
 	launchDir_.x_ = node_->GetScale2D().x_;
 
 	//KOLINATESTI
@@ -69,6 +65,8 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	box2->SetSize(Vector2::ONE);
 
 	//LOPPU
+
+	MasterDisquised = false;
 
 	SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Player, Update));
 	SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Player, PostUpdate));
@@ -93,22 +91,16 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 	if (input_->GetKeyDown(KEY_D))
 		moveDir_ += Vector2::RIGHT;
 
-	AnimatedSprite2D* animatedSprite = node_->GetComponent<AnimatedSprite2D>();
-	if (node_->GetComponent<AnimatedSprite2D>()->IsEnabled() == true && animatedSprite != animeSpriteTonttu)
-	{
-		animatedSprite = animeSpriteGreenThing;
-	}
-
 	if (!moveDir_.Equals(Vector2::ZERO))
 	{
 		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
 		launchDir_ = moveDir_;
-		if(animatedSprite->GetAnimation() != "Walk")
+		/*if(animatedSprite->GetAnimation() != "Walk")*/
 			animatedSprite->SetAnimation("Walk");
 	}
 	else
 	{
-		if (animatedSprite->GetAnimation() != "Idle")
+		/*if (animatedSprite->GetAnimation() != "Idle")*/
 			animatedSprite->SetAnimation("Idle");
 	}
 
@@ -123,17 +115,28 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 
 	if (input_->GetKeyDown(KEY_F))
 	{
-		if (animatedSprite == animeSpriteTonttu)
+		if (!MasterDisquised)
 		{
-			animeSpriteTonttu->SetEnabled(false);
-			animeSpriteGreenThing->SetEnabled(true);
-		}
-		else
-		{
-			animeSpriteTonttu->SetEnabled(true);
-			animeSpriteGreenThing->SetEnabled(false);
+			if (animatedSprite == animeSpriteTonttu)
+			{
+				animeSpriteTonttu->SetEnabled(false);
+				animeSpriteGreenThing->SetEnabled(true);
+				animatedSprite = animeSpriteGreenThing;
+			}
+			else
+			{
+				animeSpriteTonttu->SetEnabled(true);
+				animeSpriteGreenThing->SetEnabled(false);
+				animatedSprite = animeSpriteTonttu;
+			}
+			MasterDisquised = true;
 		}
 	}
+	else
+	{
+		MasterDisquised = false;
+	}
+
 
 	if (tmr.GetMSec(false) > RoF_)
 	{
@@ -157,7 +160,7 @@ void Player::ThrowProjectile()
 {
 	//Pitää säätää kokoa collisionia varte jossain kohtaa
 	Node* snowBall = scene_->CreateChild("Snowball");
-	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*5.f);//Magic number spawn distance
+	snowBall->SetPosition(node_->GetPosition()+launchDir_.Normalized()*2.f);//Magic number spawn distance
 	Snowball* snowBallComp = snowBall->CreateComponent<Snowball>();
 	snowBallComp->Init(scene_, launchDir_);
 
