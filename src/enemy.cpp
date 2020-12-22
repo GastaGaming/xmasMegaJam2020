@@ -28,16 +28,23 @@ void Enemy::Init()
 	SubscribeToEvents();
 	
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
-	spriteComponent = node_->CreateComponent<StaticSprite2D>();
-	Sprite2D* sprite = cache->GetResource<Sprite2D>("xmash2D/Petteri.png");
-	spriteComponent->SetSprite(sprite);
+	//spriteComponent = node_->CreateComponent<StaticSprite2D>();
+	//Sprite2D* sprite = cache->GetResource<Sprite2D>("xmash2D/Petteri.png");
+	//spriteComponent->SetSprite(sprite);
+	AnimationSet2D* petteriSet = cache->GetResource<AnimationSet2D>("xmash2D/Petteri/Petteri.scml");
 
-	waypoints->Push(Vector2(0.0f, 0.0f));
-	waypoints->Push(Vector2(4.0f, 0.0f));
-	waypoints->Push(Vector2(4.0f, 4.0f));
-	waypoints->Push(Vector2(0.0f, 4.0f));
+	spriteComponent = node_->CreateComponent<AnimatedSprite2D>();
+	spriteComponent->SetAnimationSet(petteriSet);
+	spriteComponent->SetAnimation("Idle");
+	spriteComponent->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
+	spriteComponent->SetEnabled(true);
 
-	node_->SetPosition2D(waypoints->At(currentWaypointIndex));
+	waypoints->Push(Vector2(node_->GetPosition().x_, node_->GetPosition().y_ + 0.0f));
+	waypoints->Push(Vector2(node_->GetPosition().x_ + 10.0f, node_->GetPosition().y_ + 0.0f));
+	waypoints->Push(Vector2(node_->GetPosition().x_ + 10.0f, node_->GetPosition().y_ + 10.0f));
+	waypoints->Push(Vector2(node_->GetPosition().x_ + 0.0f, node_->GetPosition().y_ + 10.0f));
+
+	//node_->SetPosition2D(waypoints->At(currentWaypointIndex));
 	nextWaypoint();
 }
 

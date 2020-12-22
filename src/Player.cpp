@@ -47,7 +47,7 @@ void Player::Init(Scene* scene, Camera* sceneCamera)
 	animatedSprite = animeSpriteTonttu;
 
 	RigidBody2D* rigidBody = node_->CreateComponent<RigidBody2D>();
-	rigidBody->SetBodyType(BT_KINEMATIC);
+	rigidBody->SetBodyType(BT_DYNAMIC);
 	rigidBody->SetGravityScale(0.f);
 
 	CollisionBox2D* playerHitBox = node_->CreateComponent<CollisionBox2D>();
@@ -79,7 +79,8 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 {
 	float timeStep = eventData[Update::P_TIMESTEP].GetFloat();
 	moveDir_ = Vector2::ZERO;
-	float movementSpeed = 5.0f;
+	float movementSpeed = 15.0f;
+	auto* body = GetComponent<RigidBody2D>();
 	/*if (input->GetKeyDown(KEY_SHIFT))
 		MOVE_SPEED *= 10;*/
 	if (input_->GetKeyDown(KEY_W))
@@ -93,7 +94,9 @@ void Player::Update(StringHash eventType, VariantMap& eventData)
 
 	if (!moveDir_.Equals(Vector2::ZERO))
 	{
-		node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
+		//node_->Translate(moveDir_.Normalized() * movementSpeed * timeStep);
+		node_->Translate(Vector3(moveDir_.x_, moveDir_.y_, 0) * timeStep * movementSpeed);
+		//body->ApplyForceToCenter(moveDir_ * movementSpeed, true);
 		launchDir_ = moveDir_;
 		/*if(animatedSprite->GetAnimation() != "Walk")*/
 			animatedSprite->SetAnimation("Walk");

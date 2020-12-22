@@ -6,7 +6,7 @@
 #include "TileMapLoader.h"
 #include "Player.h"
 #include "Snowball.h"
-
+#include "WinnerTrigger.h"
 // Alternatively, you can replace all above Urho3D include statements by the single following one:
 // #include <Urho3D/Urho3DAll.h>
 
@@ -68,6 +68,7 @@ public:
         Player::RegisterObject(context_);
         Enemy::RegisterObject(context_);
         Snowball::RegisterObject(context_);
+        WinnerTrigger::RegisterObject(context_);
     }
 
     /**
@@ -113,6 +114,12 @@ public:
         const TileMapInfo2D& infos = map->GetInfo();
         TileMapLayer2D* tileMapLayer = map->GetLayer(map->GetNumLayers() - 3);
         m_tileMapLoader.CreateCollisionShapesFromTMXObjects(tileMapNode, tileMapLayer, infos);
+        tileMapLayer = map->GetLayer(map->GetNumLayers() - 2);
+        m_tileMapLoader.CreateWinTrigger(tileMapNode, tileMapLayer, infos);
+        tileMapLayer = map->GetLayer(map->GetNumLayers() - 1);
+        m_tileMapLoader.CreateEnemies(tileMapNode, tileMapLayer, infos);
+
+
 
         String* asd = new String(map->GetTypeName()); 
         URHO3D_LOGINFO(*asd);
@@ -120,12 +127,13 @@ public:
         //Setup player and pass camera to it, cause renderer wanted it first
         playerNode_ = scene_->CreateChild("Player");
         Player* playerComp = playerNode_->CreateComponent<Player>();
+        playerNode_->SetPosition(Vector3(0, 0, 0));
         playerComp->Init(scene_, camera);
 
         //Create test enemy
-        enemyNode_ = scene_->CreateChild("TestEnemy");
+        /*enemyNode_ = scene_->CreateChild("TestEnemy");
         Enemy* enemyComp = enemyNode_->CreateComponent<Enemy>();
-        enemyComp->Init();
+        enemyComp->Init();*/
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,

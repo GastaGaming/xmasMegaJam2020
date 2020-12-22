@@ -1,4 +1,5 @@
 #pragma once
+//#include <Urho3D/Urho3DAll.h>
 #include <Urho3D/Urho3DAll.h>
 #include <string>
 
@@ -13,7 +14,6 @@ public:
 	void SubscribeToEvents();
 	
 	void Init();
-
 	void Update(StringHash eventType, VariantMap& eventData);
 
 	static void RegisterObject(Context* context);
@@ -22,12 +22,14 @@ private:
 	bool moveTowardsNext(float timeStep);
 	void nextWaypoint();
 	
-	StaticSprite2D* spriteComponent;
+	AnimatedSprite2D* spriteComponent;
 	float timeToDetect;
 	bool playerSeen;
 	float detectionTimer;
 	float patrolSpeed;
 	Vector<Vector2>* waypoints;
+
+	Node* myNode_;
 
 	int oldWaypointIndex;
 	int currentWaypointIndex;

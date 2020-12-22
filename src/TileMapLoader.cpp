@@ -1,5 +1,8 @@
+#include "WinnerTrigger.h"
 #include "TileMapLoader.h"
+#include "enemy.h"
 #include <iostream>
+#include <ctime>
 TileMapLoader::TileMapLoader(ResourceCache* pCache)
 {
     m_pCache = pCache;
@@ -33,7 +36,7 @@ void TileMapLoader::CreateCollisionShapesFromTMXObjects(Node* tileMapNode, TileM
     // Generate physics collision shapes and rigid bodies from the tmx file's objects located in "Physics" layer
     for (unsigned i = 0; i < tileMapLayer->GetNumObjects(); ++i)
     {
-        TileMapObject2D* tileMapObject = tileMapLayer->GetObject(i); // Get physics objects
+        TileMapObject2D* tileMapObject = tileMapLayer->GetObject(i);
         // Create collision shape from tmx object
         switch (tileMapObject->GetObjectType())
         {
@@ -120,4 +123,66 @@ CollisionChain2D* TileMapLoader::CreatePolyLineShape(Node* node, TileMapObject2D
     if (object->HasProperty("Friction"))
         shape->SetFriction(ToFloat(object->GetProperty("Friction")));
     return shape;
+}
+CollisionBox2D* TileMapLoader::CreateTrigger(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info)
+{
+    //Node* winTrigger = node->CreateChild("WinTrigger");
+    //auto* shape = winTrigger->CreateComponent<CollisionBox2D>();
+    //auto* body = winTrigger->CreateComponent<RigidBody2D>();
+    //body->SetBodyType(BT_STATIC);
+    //WinnerTrigger* winn_ = winTrigger->CreateComponent<WinnerTrigger>();
+    //winn_->Init();
+    ////Needs win trigger componen
+    //shape->SetTrigger(true);
+    //return shape;
+
+    auto* shape = node->CreateComponent<CollisionBox2D>();
+    shape->SetSize(size);
+    //shape->SetTrigger(true);
+    if (info.orientation_ == O_ORTHOGONAL)
+        shape->SetCenter(object->GetPosition() + size / 2);
+    else
+    {
+        shape->SetCenter(object->GetPosition() + Vector2(info.tileWidth_ / 2, 0.0f));
+        shape->SetAngle(45.0f); // If our tile map is isometric then shape is losange
+    }
+    WinnerTrigger* w = node->CreateComponent<WinnerTrigger>();
+    w->Init();
+    //shape->
+    return shape;
+}
+void TileMapLoader::CreateWinTrigger(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info)
+{
+    // Create rigid body to the root node
+    auto* body = tileMapNode->CreateComponent<RigidBody2D>();
+    body->SetBodyType(BT_STATIC);
+
+    int numObjects = tileMapLayer->GetNumObjects();
+    srand((unsigned)time(0));
+    int result = (rand() % numObjects);
+
+    TileMapObject2D* tileMapObject = tileMapLayer->GetObject(result);
+    CreateTrigger(tileMapNode, tileMapObject, tileMapObject->GetSize(), info);
+}
+Enemy* TileMapLoader::CreateEnemy(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info)
+{
+    Node* enemyN = node->CreateChild("Enemy");
+    enemyN->SetPosition(object->GetPosition() + size / 2);
+    Enemy* enemyC = enemyN->CreateComponent<Enemy>();
+    enemyC->Init();
+
+    return enemyC;
+}
+
+void TileMapLoader::CreateEnemies(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info)
+{
+
+    int numObjects = tileMapLayer->GetNumObjects();
+
+    for (unsigned i = 0; i < tileMapLayer->GetNumObjects(); ++i)
+    {
+        TileMapObject2D* tileMapObject = tileMapLayer->GetObject(i);
+        //CreateRectangleShape(tileMapNode, tileMapObject, tileMapObject->GetSize(), info);
+        CreateEnemy(tileMapNode, tileMapObject, tileMapObject->GetSize(), info);
+    }
 }
