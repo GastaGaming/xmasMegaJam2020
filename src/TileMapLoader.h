@@ -2,7 +2,7 @@
 
 #include <Urho3D/Urho3DAll.h>
 #include "enemy.h"
-
+#include "WinnerTrigger.h"
 
 
 using namespace Urho3D;
@@ -24,7 +24,9 @@ public:
     void CreateCollisionShapesFromTMXObjects(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info);
     void CreateWinTrigger(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info);
     void CreateEnemies(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info);
-    CollisionBox2D* CreateTrigger(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info);
+    WinnerTrigger* CreateTrigger(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info);
+
+    Node* winnerTriggerNode;
 
 private:
     ResourceCache* m_pCache;

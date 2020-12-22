@@ -124,32 +124,17 @@ CollisionChain2D* TileMapLoader::CreatePolyLineShape(Node* node, TileMapObject2D
         shape->SetFriction(ToFloat(object->GetProperty("Friction")));
     return shape;
 }
-CollisionBox2D* TileMapLoader::CreateTrigger(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info)
+WinnerTrigger* TileMapLoader::CreateTrigger(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info)
 {
-    //Node* winTrigger = node->CreateChild("WinTrigger");
-    //auto* shape = winTrigger->CreateComponent<CollisionBox2D>();
-    //auto* body = winTrigger->CreateComponent<RigidBody2D>();
-    //body->SetBodyType(BT_STATIC);
-    //WinnerTrigger* winn_ = winTrigger->CreateComponent<WinnerTrigger>();
-    //winn_->Init();
-    ////Needs win trigger componen
-    //shape->SetTrigger(true);
-    //return shape;
+    winnerTriggerNode = node->CreateChild("WinTrigger");
+    winnerTriggerNode->SetPosition(object->GetPosition() + size / 2);
+    WinnerTrigger* winnerTriggerC = winnerTriggerNode->CreateComponent<WinnerTrigger>();
+    winnerTriggerC->Init();
 
-    auto* shape = node->CreateComponent<CollisionBox2D>();
-    shape->SetSize(size);
-    //shape->SetTrigger(true);
-    if (info.orientation_ == O_ORTHOGONAL)
-        shape->SetCenter(object->GetPosition() + size / 2);
-    else
-    {
-        shape->SetCenter(object->GetPosition() + Vector2(info.tileWidth_ / 2, 0.0f));
-        shape->SetAngle(45.0f); // If our tile map is isometric then shape is losange
-    }
-    WinnerTrigger* w = node->CreateComponent<WinnerTrigger>();
-    w->Init();
+    //RigidBody2D* rg = winnerTriggerNode->CreateComponent<RigidBody2D>();
+    //rg->GetGravityScale(0)
     //shape->
-    return shape;
+    return winnerTriggerC;
 }
 void TileMapLoader::CreateWinTrigger(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info)
 {

@@ -55,13 +55,14 @@ void Snowball::Update(StringHash eventType, VariantMap& eventData)
 
 void Snowball::NodeCollision(StringHash eventType, VariantMap& eventData)
 {
-	URHO3D_LOGINFO("Collision detected");
+	//URHO3D_LOGINFO("Collision detected");
 	Node* otherNode = static_cast<Node*>(eventData[PhysicsBeginContact2D::P_NODEA].GetPtr());
-	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData["OtherBody"].GetPtr());
+	RigidBody2D* otherBody = static_cast<RigidBody2D*>(eventData[PhysicsBeginContact2D::P_BODYA].GetPtr());
 	VectorBuffer contacts = eventData["Contacts"].GetBuffer();
-	if (otherNode)
+	
+	if (otherNode->GetName() != "Player" && otherNode->GetName() != "Snowball")
 	{
-		URHO3D_LOGINFO("Node found");
+		TimesUp();
 	}
 
 }

@@ -36,4 +36,9 @@ private:
 	float waypointTravelledDistance;
 	float distanceToNextWaypoint;
 	Vector2 directionToNextWaypoint;
+
+	void NodeCollision(StringHash eventType, VariantMap& eventData);
+	int laiffi;
+
+	void LifeIsGone(); //Kaikki me kuolemme pian
 };

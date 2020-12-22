@@ -25,9 +25,7 @@ public:
     SharedPtr<Text> text_;
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
-    SharedPtr<Node> victoryNode_;
-    SharedPtr<WinnerTrigger> winnerTriggerComponent;
-
+    
     TileMapLoader m_tileMapLoader;
     SharedPtr<Node> playerNode_;
     SharedPtr<Node> enemyNode_;
@@ -63,14 +61,14 @@ public:
         #endif
 
         // Configuration not depending whether we compile for debug or release.
-        engineParameters_[EP_WINDOW_WIDTH]=1920;
-        engineParameters_[EP_WINDOW_HEIGHT]=1080;
+        engineParameters_[EP_WINDOW_WIDTH]=1280;
+        engineParameters_[EP_WINDOW_HEIGHT]=720;
         GetSubsystem<Engine>()->SetMaxFps(999999);
         // All 'EP_' constants are defined in ${URHO3D_INSTALL}/include/Urho3D/Engine/EngineDefs.h file
         Player::RegisterObject(context_);
         Enemy::RegisterObject(context_);
         Snowball::RegisterObject(context_);
-        WinnerTrigger::RegisterObject(context_, engine_);
+        WinnerTrigger::RegisterObject(context_);
     }
 
     /**
@@ -101,8 +99,8 @@ public:
         cameraNode_ = scene_->CreateChild("Camera");
         Camera* camera = cameraNode_->CreateComponent<Camera>();
         //camera->SetFarClip(2000);
+        camera->SetOrthographic(20);
         camera->SetOrthographic(true);
-        camera->SetOrthoSize(20);
         // Now we setup the viewport. Of course, you can have more than one!
         Renderer* renderer=GetSubsystem<Renderer>();
         SharedPtr<Viewport> viewport(new Viewport(context_,scene_,camera));
@@ -129,17 +127,17 @@ public:
         //Setup player and pass camera to it, cause renderer wanted it first
         playerNode_ = scene_->CreateChild("Player");
         Player* playerComp = playerNode_->CreateComponent<Player>();
-        playerNode_->SetPosition(Vector3(10, 20, 0));
+        playerNode_->SetPosition(Vector3(0, 0, 0));
         playerComp->Init(scene_, camera);
 
         //Create test enemy
+<<<<<<< HEAD
+        /*enemyNode_ = scene_->CreateChild("TestEnemy");
+=======
         enemyNode_ = scene_->CreateChild("Petteri");
+>>>>>>> cc2fdba353f8730ebd67d09b8d69f7ed665abebd
         Enemy* enemyComp = enemyNode_->CreateComponent<Enemy>();
-        enemyComp->Init();
-
-
-        victoryNode_ = m_tileMapLoader.winnerTriggerNode;
-        winnerTriggerComponent = victoryNode_->GetComponent<WinnerTrigger>();
+        enemyComp->Init();*/
 
         // We subscribe to the events we'd like to handle.
         // In this example we will be showing what most of them do,
@@ -215,14 +213,6 @@ public:
         framecount_++;
         time_+=timeStep;
         
-        if (winnerTriggerComponent->victory == true)
-        {
-            engine_->Exit();
-            /*if (victoryNode_->GetComponent<WinnerTrigger>()->victory == true)
-            {
-                engine_->Exit();
-            }*/
-        }
     }
     /**
     * Anything in the non-rendering logic that requires a second pass,
